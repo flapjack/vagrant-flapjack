@@ -19,14 +19,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.network "forwarded_port", guest: 5222, host: 5222
   config.vm.network "forwarded_port", guest: 5280, host: 5280
 
-  config.vm.synced_folder "dist/templates", "/tmp/vagrant-puppet/templates"
   config.ssh.forward_agent = true
 
   config.vm.provision :puppet do |puppet|
     puppet.module_path    = 'dist/modules'
     puppet.manifests_path = 'dist/manifests'
     puppet.manifest_file  = 'site.pp'
-    puppet.options        = ["--templatedir","/tmp/vagrant-puppet/templates"]
   end
 
   config.vm.provider "virtualbox" do |v|
