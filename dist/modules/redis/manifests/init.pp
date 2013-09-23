@@ -21,11 +21,13 @@
 #
 class redis
 (
-  $version       = 'present',
-  $enable        = true,
-  $start         = true,
+  $version          = 'present',
+  $enable           = true,
+  $start            = true,
+  $dump_frequencies = [900, 300, 60]
 )
 {
+  class{'redis::apt': } ->
   class{'redis::install': } ->
   class{'redis::logrotate': } ->
   class{'redis::config': } ~>

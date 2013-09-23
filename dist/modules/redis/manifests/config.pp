@@ -3,7 +3,7 @@
 #
 class redis::config {
   file {'/etc/redis/redis.conf':
-    source => 'puppet:///modules/redis/redis.conf',
+    content => template('redis/redis.conf.erb'),
     mode   => '0644',
     owner  => root,
     group  => root,
