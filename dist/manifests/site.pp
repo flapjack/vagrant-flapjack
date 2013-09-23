@@ -12,13 +12,7 @@ node default {
   class {'stdlib': } ->
   class {'ruby::common': } ->
   class {'git': } ->
-  ruby::version {'1.9.3-p125':
-    is_default => true
-  } ->
-
   class {'redis': } ->
-  class {'flapjack::coordinator': } ->
-  class {'flapjack::nagios_receiver': } ->
-  class {'flapjack::flapper': }
+  class {'flapjack': }
 
 }
