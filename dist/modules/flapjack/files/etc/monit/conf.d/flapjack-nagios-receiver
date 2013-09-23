@@ -1,0 +1,8 @@
+set daemon 10
+
+check process flapjack-nagios-receiver
+  with pidfile /var/run/flapjack/flapjack-nagios-receiver.pid
+  start program = "/etc/init.d/flapjack-nagios-receiver start"
+  stop  program = "/etc/init.d/flapjack-nagios-receiver stop"
+  if changed pid then alert
+    alert nobody@example.org on {nonexist, timeout, pid}

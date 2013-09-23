@@ -1,0 +1,8 @@
+set daemon 10
+
+check process flapper
+  with pidfile /var/run/flapjack/flapper.pid
+  start program = "/etc/init.d/flapper start"
+  stop  program = "/etc/init.d/flapper stop"
+  if changed pid then alert
+    alert nobody@example.org on {nonexist, timeout, pid}

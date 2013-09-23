@@ -1,0 +1,71 @@
+---
+
+production:
+  pid_file: /var/run/flapjack/flapjack.pid
+  log_file: /var/log/flapjack/flapjack.log
+  daemonize: yes
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    db: 0
+  executive:
+    enabled: yes
+    email_queue: email_notifications
+    sms_queue: sms_notifications
+    jabber_queue: jabber_notifications
+    pagerduty_queue: pagerduty_notifications
+    notification_log_file: "/var/log/flapjack/flapjack_notification.log"
+    logger:
+      level: INFO
+  gateways:
+    email:
+      enabled: yes
+      queue: email_notifications
+      smtp_config:
+        address: "localhost"
+        port: 25
+        enable_starttls_auto: false
+        # domain: 'localhost.localdomain'
+        # user_name: nil
+        # password: nil
+        # authentication: nil
+      logger:
+        level: INFO
+    sms:
+      enabled: no
+      queue: sms_notifications
+      username: "foo"
+      password: "foo"
+      logger:
+        level: DEBUG
+    jabber:
+      enabled: no
+      queue: jabber_notifications
+      server: "jabber.local"
+      port: 5222
+      jabberid: "flapjack@jabber.local"
+      password: "foo"
+      alias: "flapjack"
+      rooms:
+        - "log@conference.jabber.local"
+        - "flapjack-oobetet@conference.jabber.local"
+      logger:
+        level: INFO
+    pagerduty:
+      enabled: no
+      queue: pagerduty_notifications
+      logger:
+        level: INFO
+    web:
+      enabled: yes
+      port: 3080
+      access_log: "/var/log/flapjack/web_access.log"
+      logger:
+        level: INFO
+    api:
+      enabled: yes
+      port: 3081
+      access_log: "/var/log/flapjack/api_access.log"
+      logger:
+        level: INFO
+
