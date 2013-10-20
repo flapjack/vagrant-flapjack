@@ -29,7 +29,7 @@ class flapjack::common {
   }
 
   exec { 'symlink-flapjack-gem':
-    command => "ln -snf $(dirname $(dirname $(dirname $(/opt/rbenv/versions/1.9.3-p125/bin/gem which flapjack/patches)))) /usr/lib/flapjack",
+    command => 'ln -snf $(dirname $(dirname $(dirname $(/opt/rbenv/versions/1.9.3-p125/bin/gem which flapjack/patches)))) /usr/lib/flapjack',
     path    => '/bin:/usr/bin:/usr/local/bin:/sbin:/usr/sbin:/usr/local/sbin',
     unless  => "readlink /usr/lib/flapjack | grep -E '${version}$'",
     require => [ Package['flapjack/1.9.3-p125'] ]
