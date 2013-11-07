@@ -15,9 +15,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.network "forwarded_port", guest: 3080, host: 3080, auto_correct: true
   config.vm.network "forwarded_port", guest: 3081, host: 3081, auto_correct: true
   config.vm.network "forwarded_port", guest: 3082, host: 3082, auto_correct: true
-  config.vm.network "forwarded_port", guest: 4080, host: 4080, auto_correct: true
-  config.vm.network "forwarded_port", guest: 4081, host: 4081, auto_correct: true
-  config.vm.network "forwarded_port", guest: 4082, host: 4082, auto_correct: true
   config.vm.network "forwarded_port", guest: 5222, host: 5222, auto_correct: true
   config.vm.network "forwarded_port", guest: 5280, host: 5280, auto_correct: true
 
