@@ -11,7 +11,7 @@ class flapjack::flapjackfeeder {
   }
 
   file { '/usr/local/lib/flapjackfeeder.o':
-    source  => 'puppet:///flapjack/usr/local/lib/flapjackfeeder.o',
+    source  => 'puppet:///modules/flapjack/usr/local/lib/flapjackfeeder.o',
     owner   => root,
     group   => root,
     mode    => '0644',
