@@ -1,0 +1,58 @@
+# installs and configures icinga
+class icinga::common {
+
+  package { 'icinga':
+    ensure  => present,
+  }
+
+  service { 'icinga':
+    ensure  => running,
+  }
+
+  # icinga configuration
+  file { '/etc/icinga/icinga.cfg':
+    source  => 'puppet:///modules/icinga/etc/icinga/icinga.cfg',
+    owner   => root,
+    group   => root,
+    mode    => '0644',
+    require => Package['icinga'],
+    notify  => Service['icinga'],
+  }
+
+  file { '/etc/icinga/htpasswd.users':
+    source  => 'puppet:///modules/icinga/etc/icinga/htpasswd.users',
+    owner   => root,
+    group   => www-data,
+    mode    => '0640',
+    require => Package['icinga'],
+    notify  => Service['icinga'],
+  }
+
+  file { '/etc/nagios':
+    ensure  => link,
+    target  => '/etc/icinga',
+    require => [ Package['icinga'] ],
+  }
+
+  # prepare for flapjack-nagios-receiver
+  file { '/var/cache/icinga':
+    ensure  => directory,
+    owner   => 'nagios',
+    group   => 'www-data',
+    mode    => '2755',
+    require => Package['icinga'],
+    before  => [
+      Exec['event_stream_fifo'],
+    ],
+  }
+
+  exec { 'event_stream_fifo':
+    command => '/usr/bin/mkfifo --mode=0666 /var/cache/icinga/event_stream.fifo',
+    unless  => 'test -p /var/cache/icinga/event_stream.fifo',
+    require => [
+      Package['icinga'],
+      File['/var/cache/icinga'],
+    ],
+  }
+
+}
