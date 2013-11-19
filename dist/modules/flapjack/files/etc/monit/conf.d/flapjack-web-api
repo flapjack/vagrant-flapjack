@@ -1,8 +1,0 @@
-set daemon 10
-
-check process flapjack-web-api
-  with pidfile /var/run/flapjack/flapjack-web-api.pid
-  start program = "/etc/init.d/flapjack-web-api start"
-  stop  program = "/etc/init.d/flapjack-web-api stop"
-  if changed pid then alert
-    alert nobody@example.org on {nonexist, timeout, pid}
