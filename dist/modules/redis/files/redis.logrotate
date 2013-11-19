@@ -1,9 +1,0 @@
-/var/log/redis/*.log {
-       daily
-       rotate 30
-       copytruncate
-       nodelaycompress
-       compress
-       notifempty
-       missingok
-}
