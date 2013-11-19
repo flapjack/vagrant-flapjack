@@ -19,10 +19,6 @@ node default {
     mode      => '0644',
   }
 
-  #class {'utils':} ->
-  #class {'stdlib': } ->
-  #class {'ruby::common': } ->
-  #class {'git': } ->
   class {'icinga': } ->
   class {'nagios': } ->
   class {'flapjack': }
