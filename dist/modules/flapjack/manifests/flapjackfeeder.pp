@@ -15,7 +15,6 @@ class flapjack::flapjackfeeder {
     owner   => root,
     group   => root,
     mode    => '0644',
-    notify  => Service['icinga'],
   }
 
 }
