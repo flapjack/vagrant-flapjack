@@ -13,6 +13,7 @@ Running
 -------
 
 ```
+vagrant plugin install vagrant-cachier
 git clone https://github.com/flpjck/vagrant-flapjack.git
 cd vagrant-flapjack
 vagrant up
