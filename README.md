@@ -28,3 +28,16 @@ Production:
 - Resque: [http://localhost:3082/](http://localhost:3082/)
 - Nagios: [https://localhost:3083/](https://localhost:3084/nagios3/)
 - Icinga: [https://localhost:3083/](https://localhost:3084/icinga/)
+
+Usage
+-----
+
+To enable the flapjackfeeder event broker module in nagios/icinga do the following:
+
+```
+vagrant-flapjack$ vagrant ssh                                        
+vagrant@flapjack:~$ sudo sed -i 's!#broker_module=/usr/local/lib/flapjackfeeder!broker_module=/usr/local/lib/flapjackfeeder!' /etc/nagios3/nagios.cfg 
+vagrant@flapjack:~$ sudo sed -i 's!#broker_module=/usr/local/lib/flapjackfeeder!broker_module=/usr/local/lib/flapjackfeeder!' /etc/icinga/icinga.cfg  
+vagrant@flapjack:~$ sudo service nagios3 restart
+vagrant@flapjack:~$ sudo service icinga restart
+```
