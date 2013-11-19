@@ -19,7 +19,7 @@ class nagios::common {
     notify  => Service['nagios3'],
   }
 
-  file { '/etc/nagios/htpasswd.users':
+  file { '/etc/nagios3/htpasswd.users':
     source  => 'puppet:///modules/nagios/etc/nagios3/htpasswd.users',
     owner   => root,
     group   => www-data,
