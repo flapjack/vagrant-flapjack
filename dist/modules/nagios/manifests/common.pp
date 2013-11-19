@@ -10,8 +10,8 @@ class nagios::common {
   }
 
   # nagios configuration
-  file { '/etc/nagios/nagios.cfg':
-    source  => 'puppet:///modules/nagios/etc/nagios/nagios.cfg',
+  file { '/etc/nagios3/nagios.cfg':
+    source  => 'puppet:///modules/nagios/etc/nagios3/nagios.cfg',
     owner   => root,
     group   => root,
     mode    => '0644',
@@ -20,7 +20,7 @@ class nagios::common {
   }
 
   file { '/etc/nagios/htpasswd.users':
-    source  => 'puppet:///modules/nagios/etc/nagios/htpasswd.users',
+    source  => 'puppet:///modules/nagios/etc/nagios3/htpasswd.users',
     owner   => root,
     group   => www-data,
     mode    => '0640',
