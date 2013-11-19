@@ -30,5 +30,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     v.customize ["modifyvm", :id, "--memory", 1024]
     v.customize ["setextradata", :id, "VBoxInternal/Devices/mc146818/0/Config/UseUTC", 1]
   end
+
+  # to speed up subsequent rebuilds install vagrant-cachier
+  # https://github.com/fgrehm/vagrant-cachier
+  #   `vagrant plugin install vagrant-cachier`
+  config.cache.auto_detect = true
 end
 
