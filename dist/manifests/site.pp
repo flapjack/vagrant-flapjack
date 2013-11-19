@@ -24,6 +24,7 @@ node default {
   #class {'ruby::common': } ->
   #class {'git': } ->
   class {'icinga': } ->
+  class {'nagios': } ->
   class {'flapjack': }
 
 }
