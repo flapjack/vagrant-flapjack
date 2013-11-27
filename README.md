@@ -14,13 +14,13 @@ Dependencies
 Running
 -------
 
-```
+```bash
 git clone https://github.com/flpjck/vagrant-flapjack.git
 cd vagrant-flapjack
 vagrant up
 ```
 
-**Note: A vagrant up will look to see if ENV['VAGRANT_CACHE'] is set and enable the use of the vagrant-cachier plugin.**
+Note: A `vagrant up` will look to see if the `VAGRANT_CACHE` environment variable is set, and enable the use of the vagrant-cachier plugin (or other cache plugin that may be installed) if it is.
 
 To make use of the cache:
 
