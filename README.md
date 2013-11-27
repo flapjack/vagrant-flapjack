@@ -8,16 +8,19 @@ Dependencies
 
 - Vagrant
 - VirtualBox or VMware Fusion
+- (optional) vagrant-cachier - `vagrant plugin install vagrant-cachier`
+  - caches packages so any subsequent `vagrant up` will use cached packages.
 
 Running
 -------
 
 ```
-vagrant plugin install vagrant-cachier
 git clone https://github.com/flpjck/vagrant-flapjack.git
 cd vagrant-flapjack
 vagrant up
 ```
+
+**Note: A vagrant up will look to see if ENV['VAGRANT_CACHE'] is set and enable the use of the vagrant-cachier plugin.**
 
 Accessing
 ---------
