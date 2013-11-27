@@ -32,6 +32,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   # to speed up subsequent rebuilds install vagrant-cachier
+  # to cache packages in your ~/.vagrant.d/cache directory
   # https://github.com/fgrehm/vagrant-cachier
   #   `vagrant plugin install vagrant-cachier`
   if ENV['VAGRANT_CACHE']

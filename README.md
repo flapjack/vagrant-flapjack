@@ -22,6 +22,14 @@ vagrant up
 
 **Note: A vagrant up will look to see if ENV['VAGRANT_CACHE'] is set and enable the use of the vagrant-cachier plugin.**
 
+To make use of the cache:
+
+```bash
+VAGRANT_CACHE=yes vagrant up
+```
+
+If you get some errors during package installation that look like corrupt package files or similar, you may want to disable the caching by running `vagrant up` without the `VAGRANT_CACHE=yes` bit.
+
 Accessing
 ---------
 
@@ -39,9 +47,9 @@ Usage
 To enable the flapjackfeeder event broker module in nagios/icinga do the following:
 
 ```
-vagrant-flapjack$ vagrant ssh                                        
-vagrant@flapjack:~$ sudo sed -i 's!#broker_module=/usr/local/lib/flapjackfeeder!broker_module=/usr/local/lib/flapjackfeeder!' /etc/nagios3/nagios.cfg 
-vagrant@flapjack:~$ sudo sed -i 's!#broker_module=/usr/local/lib/flapjackfeeder!broker_module=/usr/local/lib/flapjackfeeder!' /etc/icinga/icinga.cfg  
+vagrant-flapjack$ vagrant ssh
+vagrant@flapjack:~$ sudo sed -i 's!#broker_module=/usr/local/lib/flapjackfeeder!broker_module=/usr/local/lib/flapjackfeeder!' /etc/nagios3/nagios.cfg
+vagrant@flapjack:~$ sudo sed -i 's!#broker_module=/usr/local/lib/flapjackfeeder!broker_module=/usr/local/lib/flapjackfeeder!' /etc/icinga/icinga.cfg
 vagrant@flapjack:~$ sudo service nagios3 restart
 vagrant@flapjack:~$ sudo service icinga restart
 ```
