@@ -1,0 +1,48 @@
+{
+  "contacts": [
+    {
+      "id": "21",
+      "first_name": "Ada",
+      "last_name": "Lovelace",
+      "email": "ada@example.com",
+      "media": {
+        "sms": {
+          "address": "+61412345678",
+          "interval": "3600",
+          "rollup_threshold": "5"
+        },
+        "email": {
+          "address": "ada@example.com",
+          "interval": "7200",
+          "rollup_threshold": null
+        }
+      },
+      "tags": [
+        "legend",
+        "first computer programmer"
+      ]
+    },
+    {
+      "id": "22",
+      "first_name": "Charles",
+      "last_name": "Babbage",
+      "email": "charles@example.com",
+      "media": {
+        "sms": {
+          "address": "+61412345679",
+          "interval": "3600",
+          "rollup_threshold": "5"
+        },
+        "email": {
+          "address": "charles@example.com",
+          "interval": "7200",
+          "rollup_threshold": null
+        }
+      },
+      "tags": [
+        "legend",
+        "polymath"
+      ]
+    }
+  ]
+}
