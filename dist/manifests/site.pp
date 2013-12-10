@@ -19,6 +19,10 @@ node default {
     mode      => '0644',
   }
 
+  package { 'curl':
+    ensure => present
+  } ->
+
   class {'icinga': } ->
   class {'nagios': } ->
   class {'flapjack': }
