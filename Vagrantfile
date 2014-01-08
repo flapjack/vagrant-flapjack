@@ -26,6 +26,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     puppet.manifest_file  = 'site.pp'
   end
 
+  using_virtualbox = false
   config.vm.provider "virtualbox" do |v|
     v.customize ["modifyvm", :id, "--memory", 1024]
     v.customize ["setextradata", :id, "VBoxInternal/Devices/mc146818/0/Config/UseUTC", 1]
@@ -37,7 +38,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   #   `vagrant plugin install vagrant-cachier`
   if ENV['VAGRANT_CACHE']
     config.cache.auto_detect = true
-    config.cache.enable_nfs  = true
+    #config.cache.enable_nfs  = true
   end
 end
 
