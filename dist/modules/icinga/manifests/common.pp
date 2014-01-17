@@ -38,7 +38,7 @@ class icinga::common {
     ensure  => directory,
     owner => nagios,
     group => www-data,
-    mode => 0750,
+    mode => 2750,
     require => [ Package['icinga'] ],
   }
 
