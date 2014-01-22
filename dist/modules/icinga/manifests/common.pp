@@ -34,6 +34,21 @@ class icinga::common {
     require => [ Package['icinga'] ],
   }
 
+  file { '/var/lib/icinga/rw':
+    ensure  => directory,
+    owner => nagios,
+    group => www-data,
+    mode => 2750,
+    require => [ Package['icinga'] ],
+  }
+
+  exec { 'fix-group-icinga.cmd':
+    path => "/bin:/usr/bin",
+    command => 'chgrp www-data /var/lib/icinga/rw/icinga.cmd',
+    onlyif => '/usr/bin/test `stat -c "%G" /var/lib/icinga/rw/icinga.cmd` != www-data',
+    require => [ Package['icinga'] ],
+  }
+
   # prepare for flapjack-nagios-receiver
   file { '/var/cache/icinga':
     ensure  => directory,
