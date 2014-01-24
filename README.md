@@ -44,7 +44,9 @@ Production:
 Usage
 -----
 
-Flapjack, Redis, Icinga and Nagios should all be running after `vagrant up` completes, you can access their web interfaces with the links above.
+Flapjack, Redis, Icinga and Nagios should all be running after `vagrant up` completes, you can access their web interfaces with the links above. To poke around further, ssh into the VM:
+
+`vagrant ssh`
 
 Icinga is configured to feed its events to Flapjack using flapjackfeeder. If you want to also enable Nagios to feed its events to Flapjack, you can enable the flapjackfeeder event broker module like so:
 
