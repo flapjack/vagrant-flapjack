@@ -38,18 +38,18 @@ Production:
 - Flapjack: [http://localhost:3080/](http://localhost:3080/)
 - Flapjack API: [http://localhost:3081/](http://localhost:3081/)
 - Resque: [http://localhost:3082/](http://localhost:3082/)
-- Nagios: [https://localhost:3083/](http://localhost:3083/nagios3/) user: nagiosadmin pass: nagios
-- Icinga: [https://localhost:3083/](http://localhost:3083/icinga/) user: icingaadmin pass: icinga
+- Nagios: [http://localhost:3083/](http://localhost:3083/nagios3/) user: nagiosadmin pass: nagios
+- Icinga: [http://localhost:3083/](http://localhost:3083/icinga/) user: icingaadmin pass: icinga
 
 Usage
 -----
 
-To enable the flapjackfeeder event broker module in nagios/icinga do the following:
+Flapjack, Redis, Icinga and Nagios should all be running after `vagrant up` completes, you can access their web interfaces with the links above.
+
+Icinga is configured to feed its events to Flapjack using flapjackfeeder. If you want to also enable Nagios to feed its events to Flapjack, you can enable the flapjackfeeder event broker module like so:
 
 ```
 vagrant-flapjack$ vagrant ssh
 vagrant@flapjack:~$ sudo sed -i 's!#broker_module=/usr/local/lib/flapjackfeeder!broker_module=/usr/local/lib/flapjackfeeder!' /etc/nagios3/nagios.cfg
-vagrant@flapjack:~$ sudo sed -i 's!#broker_module=/usr/local/lib/flapjackfeeder!broker_module=/usr/local/lib/flapjackfeeder!' /etc/icinga/icinga.cfg
 vagrant@flapjack:~$ sudo service nagios3 restart
-vagrant@flapjack:~$ sudo service icinga restart
 ```

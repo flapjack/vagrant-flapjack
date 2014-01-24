@@ -39,7 +39,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   #   `vagrant plugin install vagrant-cachier`
   if ENV['VAGRANT_CACHE']
     config.cache.auto_detect = true
-    #config.cache.enable_nfs  = true
+    config.cache.enable_nfs  = true
   end
 end
 
