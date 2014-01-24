@@ -38,8 +38,8 @@ Production:
 - Flapjack: [http://localhost:3080/](http://localhost:3080/)
 - Flapjack API: [http://localhost:3081/](http://localhost:3081/)
 - Resque: [http://localhost:3082/](http://localhost:3082/)
-- Nagios: [https://localhost:3083/](https://localhost:3084/nagios3/) user: nagiosadmin pass: nagios
-- Icinga: [https://localhost:3083/](https://localhost:3084/icinga/) user: icingaadmin pass: icinga
+- Nagios: [https://localhost:3083/](http://localhost:3083/nagios3/) user: nagiosadmin pass: nagios
+- Icinga: [https://localhost:3083/](http://localhost:3083/icinga/) user: icingaadmin pass: icinga
 
 Usage
 -----
