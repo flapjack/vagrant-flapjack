@@ -28,8 +28,18 @@ node default {
   class {'flapjack': }
 
   flapjack_contact { 'ada@example.com':
-    ensure     => present,
-    first_name => 'Ada',
-    last_name  => 'Lovelace',
+    ensure      => present,
+    first_name  => 'Ada',
+    last_name   => 'Lovelace',
+    timezone    => 'Europe/London',
+    sms_media   => {
+      address          => '+61412345678',
+      interval         => '3600',
+      rollup_threshold => '5',
+    },
+    email_media => {
+      address          => 'ada@example.com',
+      interval         => '7200',
+    }
   }
 }
