@@ -27,4 +27,9 @@ node default {
   class {'nagios': } ->
   class {'flapjack': }
 
+  flapjack_contact { 'ada@example.com':
+    ensure     => present,
+    first_name => 'Ada',
+    last_name  => 'Lovelace',
+  }
 }
