@@ -46,4 +46,9 @@ Puppet::Type.newtype(:flapjack_notification_rule) do
   autorequire(:service) do
     [ 'flapjack' ]
   end
+
+  autorequire(:flapjack_contact) do
+    # FIXME(auxesis): actually make this work
+    #[ contact_id ]
+  end
 end

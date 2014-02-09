@@ -4,26 +4,31 @@ Puppet::Type.type(:flapjack_contact).
              provide(:default, :parent => Puppet::Provider::Flapjack) do
 
   def create
-    contacts = [
-      {
-        # FIXME(auxesis): Add contact media
-        'id'         => resource['email'],
-        'email'      => resource['email'],
-        'first_name' => resource['first_name'],
-        'last_name'  => resource['last_name'],
-        'timezone'   => resource['timezone']
-      }
-    ]
+    # Create the contact
+    attrs = {
+      'id'         => resource['email'],
+      'email'      => resource['email'],
+      'first_name' => resource['first_name'],
+      'last_name'  => resource['last_name'],
+      'timezone'   => resource['timezone']
+    }
+    flapjack.create_contacts!(attrs)
 
-    flapjack.create_contacts!(contacts)
+    # Then create the media associated to the contact
+    media = []
+    media << new_media('sms').merge(resource['sms_media']) if resource['sms_media']
+    media << new_media('email').merge(resource['email_media']) if resource['email_media']
+
+    flapjack.create_media!(media)
   end
 
   def destroy
     flapjack.delete_contact!(id)
+    # FIXME(auxesis): leave the media dangling?
   end
 
   def exists?
-    contact
+    !!contact
   end
 
   def first_name
@@ -60,16 +65,8 @@ Puppet::Type.type(:flapjack_contact).
   end
 
   def sms_media=(attrs)
-    if media && media['sms']
-      flapjack.update_contact_medium!(id, 'sms', attrs)
-    else
-      media = {
-        "type"       => "sms",
-        "contact_id" => id
-      }.merge(attrs)
-
-      flapjack.create_media!(media)
-    end
+    medium = new_media("sms").merge(attrs)
+    flapjack.update_contact_medium!(id, 'sms', medium)
   end
 
   def email_media
@@ -77,16 +74,8 @@ Puppet::Type.type(:flapjack_contact).
   end
 
   def email_media=(attrs)
-    if media && media['email']
-      flapjack.update_contact_medium!(id, 'email', attrs)
-    else
-      media = {
-        "type"       => "email",
-        "contact_id" => id
-      }.merge(attrs)
-
-      flapjack.create_media!(media)
-    end
+    medium = new_media("sms").merge(attrs)
+    flapjack.update_contact_medium!(id, 'email', medium)
   end
 
   private
@@ -98,10 +87,21 @@ Puppet::Type.type(:flapjack_contact).
     latest = opts[:latest]
 
     if !@contact or latest
-      @contact = flapjack.contact(id)["contacts"].first
+      response = flapjack.contact(id)
+      @contact = response ? response["contacts"].first : nil
     else
       @contact
     end
+  end
+
+  def new_media(type)
+    {
+      "type"             => type,
+      "contact_id"       => id,
+      "interval"         => nil,
+      "address"          => nil,
+      "rollup_threshold" => nil,
+    }
   end
 
   def id

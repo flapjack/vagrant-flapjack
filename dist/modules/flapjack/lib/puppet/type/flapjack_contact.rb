@@ -35,6 +35,14 @@ Puppet::Type.newtype(:flapjack_contact) do
     def should_to_s(value)
       value ? value.inspect : ''
     end
+
+    def should
+      {
+        'address'          => nil,
+        'interval'         => nil,
+        'rollup_threshold' => nil,
+      }.merge(super)
+    end
   end
 
   newproperty :email_media do
