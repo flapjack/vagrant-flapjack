@@ -34,12 +34,44 @@ node default {
     timezone    => 'Europe/London',
     sms_media   => {
       address          => '+61412345678',
-      interval         => '3600',
+      interval         => '120',
       rollup_threshold => '5',
     },
     email_media => {
       address          => 'ada@example.com',
-      interval         => '7200',
+      interval         => '1800',
     }
   }
+
+  flapjack_notification_rule { 'ada catchall':
+    contact_id         => 'ada@example.com',
+    warning_media      => [ 'email' ],
+    critical_media     => [ 'sms' ],
+  }
+
+  flapjack_notification_rule { 'ada app-01':
+    contact_id     => 'ada@example.com',
+    entities       => [ 'app-01.example.com' ]
+    warning_media  => [ 'sms' ],
+    critical_media => [ 'sms' ],
+  }
+
+  flapjack_notification_rule { 'ada db':
+    contact_id     => 'ada@example.com',
+    entity_tags    => [ 'db' ],
+    warning_media  => [ 'email' ],
+    critical_media => [ ],
+  }
+
+#  flapjack_notification_rule { '08f607c7-618d-460a-b3fe-868464eb6045':
+#    contact_id         => 'ada@example.com',
+#    entity_tags        => [ 'database' ],
+#    entities           => [ 'app-1.example.com' ]
+#    time_restrictions  => [],
+#    warning_media      => [ 'email' ],
+#    critical_media     => [ 'email', 'sms' ],
+#    warning_blackhole  => false,
+#    critical_blackhole => false
+#  }
+
 }
