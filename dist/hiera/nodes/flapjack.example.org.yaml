@@ -1,15 +1,15 @@
 resources:
     flapjack_contact:
-        'john@roe.example':
+        'john@doe.example':
             ensure: present
             first_name: John
             last_name: Doe
             timezone: "Australia/Sydney"
             sms_media:
-                address: "+61432768089"
-                interval: 120
-                rollup_threshold: 5
-            email_media:
-                address: 'john@roe.example'
-                interval: 120
-                rollup_threshold: 5
+                address: "+61400111222"
+                interval: "120"
+                rollup_threshold: "5"
+#            email_media:
+#                address: 'john@roe.example'
+#                interval: 120
+#                rollup_threshold: 5
