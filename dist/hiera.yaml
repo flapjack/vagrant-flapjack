@@ -1,0 +1,8 @@
+---
+:hierarchy:
+  - nodes/%{fqdn}
+  - common
+:backends:
+  - yaml
+:yaml:
+  :datadir: '/vagrant/dist/hiera'

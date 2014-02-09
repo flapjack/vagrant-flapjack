@@ -2,6 +2,8 @@ Exec { path => '/usr/bin:/usr/sbin:/bin:/sbin' }
 
 # Make sure package repositories are up to date before main run
 
+hiera_resources(['resources'])
+
 node default {
 
   # Make sure package repositories are up to date before main run
@@ -41,6 +43,27 @@ node default {
       address          => 'ada@example.com',
       interval         => '1800',
     }
+  }
+
+  flapjack_contact { 'lindsay@bulletproof.net':
+    ensure      => present,
+    first_name  => 'Lindsay',
+    last_name   => 'Holmwood',
+    timezone    => 'Australia/Sydney',
+    sms_media   => {
+      address   => '+61432768089',
+      interval  => '120',
+    },
+    email_media => {
+      address   => 'lindsay@bulletproof.net',
+      interval  => '1800',
+    },
+  }
+
+  flapjack_notification_rule { 'lindsay-catchall':
+    contact_id         => 'lindsay@bulletproof.net',
+    warning_media      => [ 'sms' ],
+    critical_media     => [ 'email', 'sms' ],
   }
 
   flapjack_notification_rule { 'ada-catchall':
