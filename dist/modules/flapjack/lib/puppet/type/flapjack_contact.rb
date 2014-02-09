@@ -23,7 +23,8 @@ Puppet::Type.newtype(:flapjack_contact) do
 
     def insync?(is)
       return false unless is
-      pruned = is.delete_if {|k,v| !should.has_key?(k) }
+      pruned = is.delete_if {|k,v| !should.has_key?(k)}
+      pruned = Hash[pruned.map {|k,v| [k, v.to_s] }]
       should == pruned
     end
 
@@ -41,7 +42,8 @@ Puppet::Type.newtype(:flapjack_contact) do
 
     def insync?(is)
       return false unless is
-      pruned = is.delete_if {|k,v| !should.has_key?(k) }
+      pruned = is.delete_if {|k,v| !should.has_key?(k)}
+      pruned = Hash[pruned.map {|k,v| [k, v.to_s] }]
       should == pruned
     end
 
