@@ -16,7 +16,6 @@ Puppet::Type.type(:flapjack_notification_rule).
       'critical_blackhole' => critical_blackhole
     }.delete_if { |k, v| !v || v.empty?}
 
-    p rule
     flapjack.create_notification_rule!(rule)
   end
 
