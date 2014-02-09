@@ -60,22 +60,25 @@ Puppet::Type.type(:flapjack_contact).
     flapjack.update_contact!(id, attrs)
   end
 
-  def sms_media
-    media && media['sms']
-  end
+  %w(sms email).each do |medium|
+    class_eval <<-METHOD
+      def #{medium}_media
+        media && media['#{medium}']
+      end
 
-  def sms_media=(attrs)
-    medium = new_media("sms").merge(attrs)
-    flapjack.update_contact_medium!(id, 'sms', medium)
-  end
-
-  def email_media
-    media && media['email']
-  end
-
-  def email_media=(attrs)
-    medium = new_media("sms").merge(attrs)
-    flapjack.update_contact_medium!(id, 'email', medium)
+      def #{medium}_media=(attrs)
+        if #{medium}_media
+          # If the media exists, update it
+          raise NotImplemented, "updating media not implemented in flapjack-diner"
+          medium = new_media('#{medium}').merge(attrs)
+          flapjack.update_contact_medium!(id, '#{medium}', medium)
+        else
+          # Otherwise, create the media from scratch and associate it with the contact
+          media = new_media('#{medium}').merge(resource['#{medium}_media'])
+          flapjack.create_media!(media)
+        end
+      end
+    METHOD
   end
 
   private
@@ -108,3 +111,5 @@ Puppet::Type.type(:flapjack_contact).
     resource['email']
   end
 end
+
+class NotImplemented < Exception ; end
