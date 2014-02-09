@@ -6,15 +6,15 @@ Puppet::Type.newtype(:flapjack_contact) do
     isnamevar
   end
 
-  newparam :first_name do
+  newproperty :first_name do
     desc "Contact's first name"
   end
 
-  newparam :last_name do
+  newproperty :last_name do
     desc "Contact's last name"
   end
 
-  newparam :timezone do
+  newproperty :timezone do
     desc "Timezone the contact resides in"
   end
 

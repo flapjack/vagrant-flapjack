@@ -23,7 +23,36 @@ Puppet::Type.type(:flapjack_contact).
   end
 
   def exists?
-    contact = flapjack.contact(id)
+    contact
+  end
+
+  def first_name
+    contact['first_name']
+  end
+
+  def first_name=(string)
+    attrs = contact(:latest => true).merge({'first_name' => string})
+    flapjack.update_contact!(id, attrs)
+  end
+
+  def last_name
+    contact['last_name']
+  end
+
+  def last_name=(string)
+    attrs = contact(:latest => true).merge({'last_name' => string})
+
+    p attrs
+    p flapjack.update_contact!(id, attrs)
+  end
+
+  def timezone
+    contact['timezone']
+  end
+
+  def timezone=(string)
+    attrs = contact(:latest => true).merge({'timezone' => string})
+    flapjack.update_contact!(id, attrs)
   end
 
   def sms_media
@@ -63,6 +92,16 @@ Puppet::Type.type(:flapjack_contact).
   private
   def media
     flapjack.contact_media(id)
+  end
+
+  def contact(opts={})
+    latest = opts[:latest]
+
+    if !@contact or latest
+      @contact = flapjack.contact(id)["contacts"].first
+    else
+      @contact
+    end
   end
 
   def id
