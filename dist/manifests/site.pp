@@ -51,7 +51,7 @@ node default {
 
   flapjack_notification_rule { 'ada app-01':
     contact_id     => 'ada@example.com',
-    entities       => [ 'app-01.example.com' ]
+    entities       => [ 'app-01.example.com' ],
     warning_media  => [ 'sms' ],
     critical_media => [ 'sms' ],
   }
