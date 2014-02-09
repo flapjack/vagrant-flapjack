@@ -69,7 +69,7 @@ Puppet::Type.type(:flapjack_contact).
       def #{medium}_media=(attrs)
         if #{medium}_media
           # If the medium exists, update it
-          raise NotImplemented, 'updating media not implemented in flapjack-diner'
+          #raise NotImplemented, 'updating media not implemented in flapjack-diner'
           medium = new_media('#{medium}').merge(attrs)
           flapjack.update_contact_medium!(id, '#{medium}', medium)
         else
