@@ -43,20 +43,20 @@ node default {
     }
   }
 
-  flapjack_notification_rule { 'ada catchall':
+  flapjack_notification_rule { 'ada-catchall':
     contact_id         => 'ada@example.com',
     warning_media      => [ 'email' ],
     critical_media     => [ 'sms' ],
   }
 
-  flapjack_notification_rule { 'ada app-01':
+  flapjack_notification_rule { 'ada-app-01':
     contact_id     => 'ada@example.com',
     entities       => [ 'app-01.example.com' ],
     warning_media  => [ 'sms' ],
     critical_media => [ 'sms' ],
   }
 
-  flapjack_notification_rule { 'ada db':
+  flapjack_notification_rule { 'ada-db':
     contact_id     => 'ada@example.com',
     entity_tags    => [ 'db' ],
     warning_media  => [ 'email' ],
