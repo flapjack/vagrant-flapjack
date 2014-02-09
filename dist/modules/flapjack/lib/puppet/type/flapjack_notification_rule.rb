@@ -35,9 +35,15 @@ Puppet::Type.newtype(:flapjack_notification_rule) do
 
   newproperty :warning_blackhole do
     desc "If the warning notifications should be dropped"
+    newvalues(:true, :false)
   end
 
   newproperty :critical_blackhole do
     desc "If the critical notifications should be dropped"
+    newvalues(:true, :false)
+  end
+
+  autorequire(:service) do
+    [ 'flapjack' ]
   end
 end

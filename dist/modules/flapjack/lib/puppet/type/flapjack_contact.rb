@@ -26,6 +26,14 @@ Puppet::Type.newtype(:flapjack_contact) do
       pruned = is.delete_if {|k,v| !should.has_key?(k) }
       should == pruned
     end
+
+    def is_to_s(value)
+      value ? value.inspect : ''
+    end
+
+    def should_to_s(value)
+      value ? value.inspect : ''
+    end
   end
 
   newproperty :email_media do
@@ -36,5 +44,17 @@ Puppet::Type.newtype(:flapjack_contact) do
       pruned = is.delete_if {|k,v| !should.has_key?(k) }
       should == pruned
     end
+
+    def is_to_s(value)
+      value ? value.inspect : ''
+    end
+
+    def should_to_s(value)
+      value ? value.inspect : ''
+    end
+  end
+
+  autorequire(:service) do
+    [ 'flapjack' ]
   end
 end
