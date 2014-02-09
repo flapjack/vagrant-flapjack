@@ -25,6 +25,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     puppet.module_path    = 'dist/modules'
     puppet.manifests_path = 'dist/manifests'
     puppet.manifest_file  = 'site.pp'
+    #puppet.options           = "--debug --verbose" if ENV['DEBUG']
+    puppet.options           = "--hiera_config=/vagrant/dist/hiera.yaml"
   end
 
   using_virtualbox = false
