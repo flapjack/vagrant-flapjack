@@ -77,6 +77,10 @@ Puppet::Type.type(:flapjack_contact).
           media = new_media('#{medium}').merge(resource['#{medium}_media'])
           flapjack.create_media!(media)
         end
+      rescue => e
+        puts e.class
+        puts e.message
+        puts e.backtrace
       end
     METHOD
   end
