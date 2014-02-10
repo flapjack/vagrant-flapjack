@@ -1,6 +1,6 @@
 Exec { path => '/usr/bin:/usr/sbin:/bin:/sbin' }
 
-hiera_resources(['resources'])
+#hiera_resources(['resources'])
 
 node default {
 
