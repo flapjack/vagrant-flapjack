@@ -4,8 +4,8 @@
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  config.vm.box      = 'precise64'
-  config.vm.box_url  = 'http://files.vagrantup.com/precise64.box'
+  config.vm.box      = 'hashicorp/precise64'
+  config.vm.box_url  = 'https://vagrantcloud.com/hashicorp/precise64'
   config.vm.hostname = 'flapjack.example.org'
   config.vm.define :flapjack do |t|
   end
@@ -42,4 +42,3 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     config.cache.enable_nfs  = true
   end
 end
-
