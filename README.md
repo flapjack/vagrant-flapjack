@@ -15,7 +15,7 @@ Running
 -------
 
 ```bash
-git clone https://github.com/flpjck/vagrant-flapjack.git
+git clone https://github.com/flapjack/vagrant-flapjack.git
 cd vagrant-flapjack
 vagrant up
 ```
