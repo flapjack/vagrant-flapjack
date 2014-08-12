@@ -17,6 +17,17 @@ Running
 ```bash
 git clone https://github.com/flapjack/vagrant-flapjack.git
 cd vagrant-flapjack
+```
+
+Flapjack Vagrant currently supports both Ubuntu Precise and Ubuntu Trusty.  To choose your version, use one of the following to export the ubuntu_version environment variable.  The default is currently Ubuntu Precise.
+
+```bash
+export ubuntu_version='precise'
+export ubuntu_version='trusty'
+```
+Then, start the vagrant instance:
+
+```bash
 vagrant up
 ```
 

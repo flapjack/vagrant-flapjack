@@ -4,8 +4,15 @@
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  config.vm.box      = 'hashicorp/precise64'
-  config.vm.box_url  = 'https://vagrantcloud.com/hashicorp/precise64'
+  ubuntu_version = ENV['ubuntu_version'] || 'precise'
+  case ubuntu_version
+  when /precise/
+    config.vm.box      = 'hashicorp/precise64'
+    config.vm.box_url  = 'https://vagrantcloud.com/hashicorp/precise64'
+  when /trusty/
+    config.vm.box      = 'puppetlabs/ubuntu-14.04-64-puppet'
+    config.vm.box_url  = 'https://vagrantcloud.com/puppetlabs/ubuntu-14.04-64-puppet'
+  end
   config.vm.hostname = 'flapjack.example.org'
   config.vm.define :flapjack do |t|
   end
@@ -39,6 +46,5 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   #   `vagrant plugin install vagrant-cachier`
   if ENV['VAGRANT_CACHE']
     config.cache.auto_detect = true
-    config.cache.enable_nfs  = true
   end
 end
