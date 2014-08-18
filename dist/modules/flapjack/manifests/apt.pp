@@ -1,9 +1,9 @@
 class flapjack::apt {
   apt::source { 'flapjack':
-    location    => 'http://packages.flapjack.io/deb',
-    release     => 'precise',
-    repos       => 'main',
-    #key         => 'CD2EFD2A',
+    location    => "http://packages.flapjack.io/deb/${flapjack_major_version}",
+    release     => $release,
+    repos       => $component,
+    key         => '803709B6',
     include_src => false,
   }
 }
