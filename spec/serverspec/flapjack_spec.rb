@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'serverspec_spec_helper'
 
 describe package('flapjack') do
   it { should be_installed }
