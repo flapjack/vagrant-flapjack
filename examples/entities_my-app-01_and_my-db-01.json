@@ -1,0 +1,27 @@
+{
+  "entities": [
+    {
+      "id": "801",
+      "name": "my-app-01.example.com",
+      "contacts": [
+        "21",
+        "22"
+      ],
+      "tags": [
+        "my",
+        "app"
+      ]
+    },
+    {
+      "id": "802",
+      "name": "my-db-01.example.com",
+      "contacts": [
+        "21"
+      ],
+      "tags": [
+        "my",
+        "db"
+      ]
+    }
+  ]
+}

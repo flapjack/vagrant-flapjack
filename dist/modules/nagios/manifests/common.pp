@@ -10,8 +10,13 @@ class nagios::common {
   }
 
   # nagios configuration
+  $nagios_version = $lsbdistrelease ? {
+    12.04   => '3.2',
+    14.04   => '3.5',
+    default => '3.5',
+  }
   file { '/etc/nagios3/nagios.cfg':
-    source  => 'puppet:///modules/nagios/etc/nagios3/nagios.cfg',
+    source  => "puppet:///modules/nagios/etc/nagios3/${nagios_version}.nagios.cfg",
     owner   => root,
     group   => root,
     mode    => '0644',

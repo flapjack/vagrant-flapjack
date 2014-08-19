@@ -2,17 +2,18 @@
 # add an apt source
 
 define apt::source(
-  $ensure = present,
-  $location = '',
-  $release = $lsbdistcodename,
-  $repos = 'main',
-  $include_src = true,
+  $ensure            = present,
+  $location          = '',
+  $release           = 'UNDEF',
+  $repos             = 'main',
+  $include_src       = true,
   $required_packages = false,
-  $key = false,
-  $key_server = 'keyserver.ubuntu.com',
-  $key_content = false,
-  $key_source  = false,
-  $pin = false
+  $key               = undef,
+  $key_server        = 'keyserver.ubuntu.com',
+  $key_content       = undef,
+  $key_source        = undef,
+  $pin               = false,
+  $architecture      = undef
 ) {
 
   include apt::params
@@ -21,8 +22,14 @@ define apt::source(
   $sources_list_d = $apt::params::sources_list_d
   $provider       = $apt::params::provider
 
-  if $release == undef {
-    fail('lsbdistcodename fact not available: release parameter required')
+  if $release == 'UNDEF' {
+    if $::lsbdistcodename == undef {
+      fail('lsbdistcodename fact not available: release parameter required')
+    } else {
+      $release_real = $::lsbdistcodename
+    }
+  } else {
+    $release_real = $release
   }
 
   file { "${name}.list":
@@ -35,23 +42,34 @@ define apt::source(
     notify  => Exec['apt_update'],
   }
 
-  if ($pin != false) and ($ensure == 'present') {
-    apt::pin { $release:
+
+  if ($pin != false) {
+    # Get the host portion out of the url so we can pin to origin
+    $url_split = split($location, '/')
+    $host      = $url_split[2]
+
+    apt::pin { $name:
+      ensure   => $ensure,
       priority => $pin,
-      before   => File["${name}.list"]
+      before   => File["${name}.list"],
+      origin   => $host,
     }
   }
 
   if ($required_packages != false) and ($ensure == 'present') {
     exec { "Required packages: '${required_packages}' for ${name}":
       command     => "${provider} -y install ${required_packages}",
-      subscribe   => File["${name}.list"],
+      logoutput   => 'on_failure',
       refreshonly => true,
+      tries       => 3,
+      try_sleep   => 1,
+      subscribe   => File["${name}.list"],
+      before      => Exec['apt_update'],
     }
   }
 
   # We do not want to remove keys when the source is absent.
-  if ($key != false) and ($ensure == 'present') {
+  if $key and ($ensure == 'present') {
     apt::key { "Add key: ${key} from Apt::Source ${title}":
       ensure      => present,
       key         => $key,
@@ -60,5 +78,10 @@ define apt::source(
       key_source  => $key_source,
       before      => File["${name}.list"],
     }
+  }
+
+  # Need anchor to provide containment for dependencies.
+  anchor { "apt::source::${name}":
+    require => Class['apt::update'],
   }
 }

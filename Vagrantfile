@@ -4,8 +4,19 @@
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  config.vm.box      = 'hashicorp/precise64'
-  config.vm.box_url  = 'https://vagrantcloud.com/hashicorp/precise64'
+
+  ubuntu_version = ENV['ubuntu_version'] || 'precise'
+  case ubuntu_version
+  when /precise/
+    config.vm.box      = 'hashicorp/precise64'
+    config.vm.box_url  = 'https://vagrantcloud.com/hashicorp/precise64'
+  when /trusty/
+    config.vm.box      = 'puppetlabs/ubuntu-14.04-64-puppet'
+    config.vm.box_url  = 'https://vagrantcloud.com/puppetlabs/ubuntu-14.04-64-puppet'
+  end
+  component = ENV['component'] || 'main'
+  flapjack_major_version = ENV['flapjack_major_version'] || ''
+
   config.vm.hostname = 'flapjack.example.org'
   config.vm.define :flapjack do |t|
   end
@@ -22,9 +33,15 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.ssh.forward_agent = true
 
   config.vm.provision :puppet do |puppet|
+    puppet.options = "--verbose --debug"
     puppet.module_path    = 'dist/modules'
     puppet.manifests_path = 'dist/manifests'
     puppet.manifest_file  = 'site.pp'
+    puppet.facter = {
+      "release"   => ubuntu_version,
+      "component" => component,
+      "flapjack_major_version" => flapjack_major_version
+    }
   end
 
   using_virtualbox = false
@@ -39,6 +56,5 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   #   `vagrant plugin install vagrant-cachier`
   if ENV['VAGRANT_CACHE']
     config.cache.auto_detect = true
-    config.cache.enable_nfs  = true
   end
 end

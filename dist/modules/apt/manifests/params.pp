@@ -7,17 +7,49 @@ class apt::params {
 
   case $::lsbdistid {
     'debian': {
-      $backports_location = 'http://backports.debian.org/debian-backports'
+      case $::lsbdistcodename {
+        'squeeze': {
+          $backports_location = 'http://backports.debian.org/debian-backports'
+          $legacy_origin       = true
+          $origins             = ['${distro_id} oldstable',
+                                  '${distro_id} ${distro_codename}-security']
+        }
+        'wheezy': {
+          $backports_location = 'http://ftp.debian.org/debian/'
+          $legacy_origin      = false
+          $origins            = ['origin=Debian,archive=stable,label=Debian-Security']
+        }
+        default: {
+          $backports_location = 'http://http.debian.net/debian/'
+          $legacy_origin      = false
+          $origins            = ['origin=Debian,archive=stable,label=Debian-Security']
+        }
+      }
     }
     'ubuntu': {
       case $::lsbdistcodename {
-        'hardy','lucid','maverick','natty','oneiric','precise': {
+        'lucid': {
           $backports_location = 'http://us.archive.ubuntu.com/ubuntu'
+          $ppa_options        = undef
+          $legacy_origin      = true
+          $origins            = ['${distro_id} ${distro_codename}-security']
+        }
+        'precise', 'trusty': {
+          $backports_location = 'http://us.archive.ubuntu.com/ubuntu'
+          $ppa_options        = '-y'
+          $legacy_origin      = true
+          $origins            = ['${distro_id}:${distro_codename}-security']
         }
         default: {
           $backports_location = 'http://old-releases.ubuntu.com/ubuntu'
+          $ppa_options        = '-y'
+          $legacy_origin      = true
+          $origins            = ['${distro_id}:${distro_codename}-security']
         }
       }
+    }
+    default: {
+      fail("Unsupported lsbdistid (${::lsbdistid})")
     }
   }
 }

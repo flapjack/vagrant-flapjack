@@ -10,8 +10,13 @@ class icinga::common {
   }
 
   # icinga configuration
+  $icinga_version = $lsbdistrelease ? {
+    12.04   => '1.6',
+    14.04   => '1.10',
+    default => '1.10',
+  }
   file { '/etc/icinga/icinga.cfg':
-    source  => 'puppet:///modules/icinga/etc/icinga/icinga.cfg',
+    source  => "puppet:///modules/icinga/etc/icinga/${icinga_version}.icinga.cfg",
     owner   => root,
     group   => root,
     mode    => '0644',
