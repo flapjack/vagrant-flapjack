@@ -33,7 +33,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.ssh.forward_agent = true
 
   config.vm.provision :puppet do |puppet|
-    puppet.options = "--verbose --debug"
     puppet.module_path    = 'dist/modules'
     puppet.manifests_path = 'dist/manifests'
     puppet.manifest_file  = 'site.pp'
