@@ -88,6 +88,6 @@ bundle exec rake
 
 To run the serverspec or capybara tests separately, run:
 ```bash
-bundle exec serverspec
-bundle exec capybara
+bundle exec rake serverspec
+bundle exec rake capybara
 ```
