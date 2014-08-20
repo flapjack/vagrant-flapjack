@@ -28,7 +28,7 @@ export ubuntu_version='trusty'
 
 Flapjack Vagrant can install either the latest main experimental package from a given release.  To choose your component and release export the following variables.   The default is the 0.9 main release.
 
-```
+```bash
 export component='experimental'
 export flapjack_major_version='1.0'
 ```
