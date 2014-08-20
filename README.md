@@ -28,7 +28,7 @@ export ubuntu_version='trusty'
 
 Flapjack Vagrant can install either the latest main experimental package from a given release.  To choose your component and release export the following variables.   The default is the 0.9 main release.
 
-```
+```bash
 export component='experimental'
 export flapjack_major_version='1.0'
 ```
@@ -73,4 +73,21 @@ Icinga is configured to feed its events to Flapjack using flapjackfeeder. If you
 vagrant-flapjack$ vagrant ssh
 vagrant@flapjack:~$ sudo sed -i 's!#broker_module=/usr/local/lib/flapjackfeeder!broker_module=/usr/local/lib/flapjackfeeder!' /etc/nagios3/nagios.cfg
 vagrant@flapjack:~$ sudo service nagios3 restart
+```
+
+Testing
+-------
+
+Flapjack packages now have testing, using both serverspec and capybara.  The serverspec tests will bring up the vagrant image if it isn't already up.
+
+To run all the tests, run:
+
+```bash
+bundle exec rake
+```
+
+To run the serverspec or capybara tests separately, run:
+```bash
+bundle exec serverspec
+bundle exec capybara
 ```
