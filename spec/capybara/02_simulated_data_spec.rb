@@ -2,9 +2,10 @@ require 'capybara_spec_helper'
 
 describe "Simulate a failed check", :type => :feature do
   before :all do
-    system("vagrant ssh -c 'sudo /opt/flapjack/bin/flapjack simulate fail --check bacon'")
-    BACON_URI = '/check?entity=foo-app-01&check=bacon'
+    system("vagrant ssh -c 'sudo /opt/flapjack/bin/flapjack simulate fail --check bacon -i 1 -t 0.1'")
   end
+
+  BACON_URI = '/check?entity=foo-app-01&check=bacon'
 
   it "Check Failing Entities" do
     visit '/entities_failing'
@@ -35,14 +36,14 @@ describe "Simulate a failed check", :type => :feature do
   it "Ends initial Maintenance" do
     visit BACON_URI
 
-    within(:css, "#scheduled-maintenance") do
+    within(:css, "#scheduled-maintenance-summary") do
       content = [ 'In Scheduled Maintenance', 'Automatically created for new check' ]
       content.each { |c| expect(page).to have_content c }
     end
 
     # End the maintenance
     click_button 'End Now'
-    within(:css, "#no-unscheduled-maintenance") do
+    within(:css, "#add-unscheduled-maintenance") do
       no_content = [ 'In Scheduled Maintenance', 'Automatically created for new check' ]
       no_content.each { |c| expect(page).to_not have_content c }
       content = [ 'Acknowledge alert', 'Summary' ]
@@ -52,24 +53,24 @@ describe "Simulate a failed check", :type => :feature do
 
   it "Adds and removes scheduled maintenance starting now" do
     visit BACON_URI
-    MAINTENANCE = {
+    maintenance = {
       :start_time => 'now',
       :duration   => '3 hrs',
       :summary    => 'Off to the lake'
     }
 
-    within(:css, "#scheduled-maintenance-summary") do
+    within(:css, "#add-unscheduled-maintenance") do
       no_content = [ 'In Scheduled Maintenance', 'Automatically created for new check' ]
       no_content.each { |c| expect(page).to_not have_content c }
       content = [ 'Acknowledge alert', 'Summary' ]
       content.each { |c| expect(page).to have_content c }
     end
 
-    # Add more maintenance
+    # Add maintenance
     within(:css, "#add-scheduled-maintenance") do
-      fill_in('start_time', :with => MAINTENANCE[:start_time])
-      fill_in('duration', :with => MAINTENANCE[:duration])
-      fill_in('summary', :with => MAINTENANCE[:summary])
+      fill_in('start_time', :with => maintenance[:start_time])
+      fill_in('duration', :with => maintenance[:duration])
+      fill_in('summary', :with => maintenance[:summary])
       click_button 'Save'
     end
 
@@ -85,7 +86,7 @@ describe "Simulate a failed check", :type => :feature do
       click_button 'End Now'
     end
 
-    within(:css, "#scheduled-maintenance-summary") do
+    within(:css, "#add-unscheduled-maintenance") do
       no_content = [ 'In Scheduled Maintenance', 'Automatically created for new check' ]
       no_content.each { |c| expect(page).to_not have_content c }
       content = [ 'Acknowledge alert', 'Summary' ]
@@ -93,9 +94,9 @@ describe "Simulate a failed check", :type => :feature do
     end
   end
 
-  it "Adds and removes future scheduled Maintenance" do
+  it "Adds and removes future scheduled maintenance" do
     visit BACON_URI
-    MAINTENANCE = {
+    maintenance = {
       :start_time => '2023-04-04 16:00:00',
       :duration   => '3 hrs',
       :summary    => 'Off to the park'
@@ -110,13 +111,13 @@ describe "Simulate a failed check", :type => :feature do
 
     # Add more maintenance
     within(:css, "#add-scheduled-maintenance") do
-      fill_in('start_time', :with => MAINTENANCE[:start_time])
-      fill_in('duration', :with => MAINTENANCE[:duration])
-      fill_in('summary', :with => MAINTENANCE[:summary])
+      fill_in('start_time', :with => maintenance[:start_time])
+      fill_in('duration', :with => maintenance[:duration])
+      fill_in('summary', :with => maintenance[:summary])
       click_button 'Save'
     end
 
-    MAINTENANCE.values.each { |v| expect(page).to have_content v }
+    maintenance.values.each { |v| expect(page).to have_content v }
 
     within(:css, "#add-unscheduled-maintenance") do
       no_content = [ 'In Scheduled Maintenance', 'Automatically created for new check' ]
@@ -129,46 +130,46 @@ describe "Simulate a failed check", :type => :feature do
     within(:css, "#scheduled-maintenance-periods") do
       click_button 'Delete'
     end
-    MAINTENANCE.values.each { |v| expect(page).to_not have_content v }
+    maintenance.values.each { |v| expect(page).to_not have_content v }
   end
 
   it "Use unscheduled Maintenance" do
     visit BACON_URI
 
-    FIRST_MAINTENANCE = {
+    FIRST_maintenance = {
       :duration   => '2 hrs',
       :summary    => 'Off to the zoo'
     }
 
     within(:css, "#add-unscheduled-maintenance") do
-      fill_in('summary', :with => FIRST_MAINTENANCE[:summary])
-      fill_in('duration', :with => FIRST_MAINTENANCE[:duration])
+      fill_in('summary', :with => FIRST_maintenance[:summary])
+      fill_in('duration', :with => FIRST_maintenance[:duration])
       click_button 'Acknowledge'
     end
 
     within(:css, "#unscheduled-maintenance-summary") do
-      content = [ 'Acknowledged', FIRST_MAINTENANCE[:summary] ]
+      content = [ 'Acknowledged', FIRST_maintenance[:summary] ]
       content.each { |c| expect(page).to have_content c }
     end
 
-    SECOND_MAINTENANCE = {
+    SECOND_maintenance = {
       :duration   => '2 hrs',
       :summary    => 'Off to the shops'
     }
 
     within(:css, "#add-unscheduled-maintenance") do
-      fill_in('summary', :with => SECOND_MAINTENANCE[:summary])
-      fill_in('duration', :with => SECOND_MAINTENANCE[:duration])
+      fill_in('summary', :with => SECOND_maintenance[:summary])
+      fill_in('duration', :with => SECOND_maintenance[:duration])
       click_button 'Replace acknowledgment'
     end
 
     within(:css, "#unscheduled-maintenance-summary") do
-      content = [ 'Acknowledged', SECOND_MAINTENANCE[:summary] ]
+      content = [ 'Acknowledged', SECOND_maintenance[:summary] ]
       content.each { |c| expect(page).to have_content c }
     end
 
     click_button 'End Unscheduled Maintenance (Unacknowledge)'
-    content = [ 'Acknowledged', FIRST_MAINTENANCE[:summary], SECOND_MAINTENANCE[:summary] ]
+    content = [ 'Acknowledged', FIRST_maintenance[:summary], SECOND_maintenance[:summary] ]
     content.each { |c| expect(page).to_not have_content c }
   end
 

@@ -1,6 +1,10 @@
 require 'capybara_spec_helper'
 
 describe  "Contact Management", :type => :feature do
+  before :all do
+    system("vagrant ssh -c 'sudo /opt/flapjack/bin/flapjack simulate fail --check eggs -i 1 -t 0.1'")
+  end
+
   NAME = {
     :first_name => 'Test',
     :last_name => 'Guy'
@@ -14,7 +18,7 @@ describe  "Contact Management", :type => :feature do
 
   ENTITY = {
     :name  => 'foo-app-01',
-    :check => 'bacon'
+    :check => 'eggs'
   }
 
   it "Add contact" do
@@ -54,10 +58,22 @@ describe  "Contact Management", :type => :feature do
     first('tr.contact_list_item').hover
     first(:css, ".btn.btn-default.contact-entities", :visible => false).click
 
-    find(".select2-offscreen").click
-    find(".select2-drop li", text: 'foo-app-01').click
+    if ENV['FF'].nil?
+      # FIXME: the add contact entity button doesn't get hit correctly here
+      find(".select2-offscreen").trigger('click')
+      find(".select2-drop li", text: 'foo-app-01').trigger('click')
 
-    click_button 'Add Entities'
+      find('#add-contact-entity').trigger('click')
+    else
+      find(".select2-offscreen").click
+      find(".select2-drop li", text: 'foo-app-01').click
+
+      click_button 'Add Entities'
+    end
+
+    within(:css, '#contactEntityList') do
+      expect(page).to have_content 'foo-app-01'
+    end
   end
 
   it "Checks media and entity were added to contact" do
@@ -73,7 +89,7 @@ describe  "Contact Management", :type => :feature do
 
     content.each { |c| expect(page).to have_content c }
 
-    visit '/check?entity=foo-app-01&check=bacon'
+    visit '/check?entity=foo-app-01&check=eggs'
     NAME.values.each { |c| expect(page).to have_content c }
     MEDIA.keys.each { |k| expect(page).to have_content k.capitalize }
   end

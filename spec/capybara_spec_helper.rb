@@ -8,7 +8,7 @@ end
 
 RSpec.configure do |config|
   config.before :suite do
-    if ENV['FF'] == 'true' # in case you wanna run it with selenium
+    if ! ENV['FF'].nil?
       require 'selenium-webdriver'
     else
       require 'capybara/poltergeist'
