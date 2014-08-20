@@ -74,3 +74,20 @@ vagrant-flapjack$ vagrant ssh
 vagrant@flapjack:~$ sudo sed -i 's!#broker_module=/usr/local/lib/flapjackfeeder!broker_module=/usr/local/lib/flapjackfeeder!' /etc/nagios3/nagios.cfg
 vagrant@flapjack:~$ sudo service nagios3 restart
 ```
+
+Testing
+-------
+
+Flapjack packages now have testing, using both serverspec and capybara.  The serverspec tests will bring up the vagrant image if it isn't already up.
+
+To run all the tests, run:
+
+```bash
+bundle exec rake
+```
+
+To run the serverspec or capybara tests separately, run:
+```bash
+bundle exec serverspec
+bundle exec capybara
+```

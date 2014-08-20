@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'serverspec_spec_helper'
 
 describe package('flapjack') do
   it { should be_installed }
@@ -16,13 +16,10 @@ end
 
 describe process("flapjack") do
   it { should be_running }
-  its(:args) { should match /\/opt\/flapjack\/bin\/flapjack start/ }
+  its(:args) { should match   /\/opt\/flapjack\/bin\/flapjack server start/ }
 end
 
 describe port(80) do
-  it { should be_listening }
-end
-describe port(3071) do
   it { should be_listening }
 end
 describe port(3080) do
