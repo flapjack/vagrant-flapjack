@@ -25,6 +25,14 @@ Flapjack Vagrant currently supports both Ubuntu Precise and Ubuntu Trusty.  To c
 export ubuntu_version='precise'
 export ubuntu_version='trusty'
 ```
+
+Flapjack Vagrant can install either the latest main experimental package from a given release.  To choose your component and release export the following variables.   The default is the 0.9 main release.
+
+```
+export component='experimental'
+export flapjack_major_version='1.0'
+```
+
 Then, start the vagrant instance:
 
 ```bash
