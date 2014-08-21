@@ -104,4 +104,7 @@ describe  "Contact Management", :type => :feature do
     NAME.values.each { |v| expect(page).not_to have_content v }
   end
 
+  after :all do
+    system("vagrant ssh -c 'sudo /opt/flapjack/embedded/bin/redis-cli -p 6380 -n 0 flushdb'")
+  end
 end

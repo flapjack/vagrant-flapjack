@@ -181,7 +181,8 @@ describe "Simulate a failed check", :type => :feature do
     content = [ 'This check has been decommissioned', 'DISABLED' ]
     content.each { |c| expect(page).to have_content c }
   end
+
+  after :all do
+    system("vagrant ssh -c 'sudo /opt/flapjack/embedded/bin/redis-cli -p 6380 -n 0 flushdb'")
+  end
 end
-# after :all do # Clear redis
-#   vagrant ssh -c 'sudo /opt/flapjack/bin/flapjack simulate fail --check bacon'
-# end
