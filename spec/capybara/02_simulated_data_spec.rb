@@ -2,7 +2,7 @@ require 'capybara_spec_helper'
 
 describe "Simulate a failed check", :type => :feature do
   before :all do
-    system("vagrant ssh -c 'sudo /opt/flapjack/bin/flapjack simulate fail --check bacon -i 1 -t 0.1'")
+    system("vagrant ssh -c 'sudo /opt/flapjack/bin/flapjack simulate fail --check bacon -i 1 -t 0.1' > /dev/null")
   end
 
   BACON_URI = '/check?entity=foo-app-01&check=bacon'

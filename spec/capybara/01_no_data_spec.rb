@@ -9,7 +9,7 @@ describe "Test Flapjack before data is added", :type => :feature do
   it "Check Summary Page" do
     visit '/'
 
-    content = [ 'Flapjack', '0 out of 1 entities have failing checks', '0 out of 6 checks are failing', 'Summary' ]
+    content = [ 'Flapjack', '0 out of 1 entities have failing checks', 'checks are failing', 'Summary' ]
     content.each { |c| expect(page).to have_content c }
   end
 
@@ -30,7 +30,7 @@ describe "Test Flapjack before data is added", :type => :feature do
   it "All Checks" do
     visit '/checks_all'
 
-    content = [ 'Checks', '0 failing out of 6',
+    content = [ 'Checks', '0 failing out of',
       'Entity', 'Check', 'State', 'Summary', 'Last State Change', 'Last Update', 'Last Notification',
       'Load', 'Users', 'Disk Space', 'HTTP', 'SSH', 'Total Processes',
       'load average', 'users currently logged in', 'DISK OK', 'HTTP OK', 'SSH OK', 'PROCS OK'

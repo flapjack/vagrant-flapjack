@@ -2,7 +2,7 @@ require 'capybara_spec_helper'
 
 describe  "Contact Management", :type => :feature do
   before :all do
-    system("vagrant ssh -c 'sudo /opt/flapjack/bin/flapjack simulate fail --check eggs -i 1 -t 0.1'")
+    system("vagrant ssh -c 'sudo /opt/flapjack/bin/flapjack simulate fail --check eggs -i 1 -t 0.1' > /dev/null")
   end
 
   NAME = {
