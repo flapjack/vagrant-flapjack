@@ -46,8 +46,8 @@ class nagios::common {
 #  }
 #
 #  exec { 'event_stream_fifo':
-#    command => '/usr/bin/mkfifo --mode=0666 /var/cache/icinga/event_stream.fifo',
-#    unless  => 'test -p /var/cache/icinga/event_stream.fifo',
+#    command => '/usr/bin/mkfifo --mode=0666 /var/cache/nagios3/event_stream.fifo',
+#    unless  => 'test -p /var/cache/nagios3/event_stream.fifo',
 #    require => [
 #      Package['icinga'],
 #      File['/var/cache/icinga'],

@@ -17,12 +17,12 @@ end
 describe file('/etc/icinga/icinga.cfg') do
   it { should be_file }
   its(:content) { should match /enable_notifications=0/ }
-  its(:content) { should match /host_perfdata_file=\/var\/cache\/icinga\/event_stream.fifo/ }
-  its(:content) { should match /service_perfdata_file=\/var\/cache\/icinga\/event_stream.fifo/ }
+  its(:content) { should match /host_perfdata_file=\/var\/cache\/nagios3\/event_stream.fifo/ }
+  its(:content) { should match /service_perfdata_file=\/var\/cache\/nagios3\/event_stream.fifo/ }
 end
 
 # Test for named pipes, as there's no be_pipe in rspec
-describe command('test -p /var/cache/icinga/event_stream.fifo') do
+describe command('test -p /var/cache/nagios3/event_stream.fifo') do
   it { should return_exit_status 0 }
 end
 
