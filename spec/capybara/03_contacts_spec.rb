@@ -59,15 +59,13 @@ describe  "Contact Management", :type => :feature do
     first(:css, ".btn.btn-default.contact-entities", :visible => false).click
 
     if ENV['FF'].nil?
-      # FIXME: the add contact entity button doesn't get hit correctly here
+      # FIXME: While the entity gets added and shows up in the entities box, this doesn't seem to actually save
       find(".select2-offscreen").trigger('click')
-      find(".select2-drop li", text: 'foo-app-01').trigger('click')
-
+      page.driver.click(270, 100)
       find('#add-contact-entity').trigger('click')
     else
       find(".select2-offscreen").click
       find(".select2-drop li", text: 'foo-app-01').click
-
       click_button 'Add Entities'
     end
 
