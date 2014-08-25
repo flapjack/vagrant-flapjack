@@ -33,25 +33,4 @@ class nagios::common {
     notify  => Service['nagios3'],
   }
 
-#  # prepare for flapjack-nagios-receiver
-#  file { '/var/cache/icinga':
-#    ensure  => directory,
-#    owner   => 'nagios',
-#    group   => 'www-data',
-#    mode    => '2755',
-#    require => Package['nagios3'],
-#    before  => [
-#      Exec['event_stream_fifo'],
-#    ],
-#  }
-#
-#  exec { 'event_stream_fifo':
-#    command => '/usr/bin/mkfifo --mode=0666 /var/cache/nagios3/event_stream.fifo',
-#    unless  => 'test -p /var/cache/nagios3/event_stream.fifo',
-#    require => [
-#      Package['icinga'],
-#      File['/var/cache/icinga'],
-#    ],
-#  }
-
 }
