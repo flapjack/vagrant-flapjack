@@ -41,7 +41,7 @@ describe "Test Flapjack before data is added", :type => :feature do
   it "Check Failing Checks" do
     visit '/checks_failing'
 
-    content = [ 'Failing Checks', '0 failing out of 6',
+    content = [ 'Failing Checks', '0 failing out of',
       'Entity', 'Check', 'State', 'Summary', 'Last State Change', 'Last Update', 'Last Notification'
     ]
     content.each { |c| expect(page).to have_content c }
