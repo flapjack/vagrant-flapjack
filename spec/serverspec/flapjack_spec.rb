@@ -19,6 +19,10 @@ describe process("flapjack") do
   its(:args) { should match   /\/opt\/flapjack\/bin\/flapjack server start/ }
 end
 
+describe command('test -p /var/lib/nagios3/rw/nagios.cmd') do
+  it { should return_exit_status 0 }
+end
+
 describe port(80) do
   it { should be_listening }
 end
@@ -30,6 +34,19 @@ describe port(3081) do
 end
 describe port(6380) do
   it { should be_listening }
+end
+
+# Check that the go code has been compiled in
+describe file('/opt/flapjack/embedded/lib/ruby/gems/2.1.0/gems/flapjack-1.0.0/libexec/httpbroker') do
+  it { should be_file }
+  it { should be_executable }
+end
+
+describe command('/opt/flapjack/bin/flapjack receiver httpbroker --help') do
+  it { should return_stderr /port/ }
+  it { should return_stderr /server/ }
+  it { should return_stderr /database/ }
+  it { should return_stderr /interval/ }
 end
 
 describe file('/etc/flapjack/flapjack_config.yaml') do
