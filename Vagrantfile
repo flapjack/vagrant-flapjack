@@ -15,7 +15,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     config.vm.box_url  = 'https://vagrantcloud.com/puppetlabs/ubuntu-14.04-64-puppet'
   end
   component = ENV['component'] || 'main'
-  flapjack_major_version = ENV['flapjack_major_version'] || '1.0'
+  flapjack_major_version = ENV['flapjack_major_version'] || 'v1'
 
   config.vm.hostname = 'flapjack.example.org'
   config.vm.define :flapjack do |t|
