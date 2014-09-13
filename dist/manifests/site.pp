@@ -36,6 +36,6 @@ node default {
   exec { 'gem install pry':
     path   => "/usr/bin:/usr/sbin:/bin",
     unless => "gem list --local | grep pry"
-  } ->
+  }
 
 }

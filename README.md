@@ -9,7 +9,7 @@ Dependencies
 - Vagrant
 - VirtualBox or VMware Fusion
 - (optional) vagrant-cachier - `vagrant plugin install vagrant-cachier`
-  - caches packages so any subsequent `vagrant up` will use cached packages.
+  - caches packages so any subsequent `vagrant up` will use cached packages, and therefore be much faster if you're not on a super fast internet link.
 
 Running
 -------
