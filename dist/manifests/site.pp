@@ -5,7 +5,7 @@ Exec { path => '/usr/bin:/usr/sbin:/bin:/sbin' }
 
 node default {
   class { 'apt':
-     always_apt_update    => true,
+     always_apt_update => false,
   }
 
   # Make sure package repositories are up to date before main run
