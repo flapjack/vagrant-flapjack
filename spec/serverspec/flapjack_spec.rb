@@ -36,12 +36,6 @@ describe port(6380) do
   it { should be_listening }
 end
 
-# Check that the go code has been compiled in
-describe file('/opt/flapjack/embedded/lib/ruby/gems/2.1.0/gems/flapjack-1.0.0/libexec/httpbroker') do
-  it { should be_file }
-  it { should be_executable }
-end
-
 describe command('/opt/flapjack/bin/flapjack receiver httpbroker --help') do
   it { should return_stderr /port/ }
   it { should return_stderr /server/ }
