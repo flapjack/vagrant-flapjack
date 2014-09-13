@@ -53,10 +53,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # to cache packages in your ~/.vagrant.d/cache directory
   # https://github.com/fgrehm/vagrant-cachier
   #   `vagrant plugin install vagrant-cachier`
-  if Vagrant.has_plugin?("vagrant-cachier")
-    # Configure cached packages to be shared between instances of the same base box.
-    # More info on http://fgrehm.viewdocs.io/vagrant-cachier/usage
-    config.cache.scope = :box
+  unless ENV['DISABLE_VAGRANT_CACHE']
+    if Vagrant.has_plugin?("vagrant-cachier")
+      # Configure cached packages to be shared between instances of the same base box.
+      # More info on http://fgrehm.viewdocs.io/vagrant-cachier/usage
+      config.cache.scope = :box
+    end
   end
 end
 

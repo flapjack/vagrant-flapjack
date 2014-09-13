@@ -41,15 +41,11 @@ Then, start the vagrant instance:
 vagrant up
 ```
 
-Note: A `vagrant up` will look to see if the `VAGRANT_CACHE` environment variable is set, and enable the use of the vagrant-cachier plugin (or other cache plugin that may be installed) if it is.
-
-To make use of the cache:
+If you get some errors during package installation that look like corrupt package files or similar, you may want to disable the caching by running `vagrant up` with the `DISABLE_VAGRANT_CACHE` environment variable set:
 
 ```bash
-VAGRANT_CACHE=yes vagrant up
+DISABLE_VAGRANT_CACHE=yes vagrnat up
 ```
-
-If you get some errors during package installation that look like corrupt package files or similar, you may want to disable the caching by running `vagrant up` without the `VAGRANT_CACHE=yes` bit.
 
 Accessing
 ---------
