@@ -12,14 +12,14 @@ logdir = 'logs'
 Flapjack::Diner.base_uri('127.0.0.1:3081')
 Flapjack::Diner.logger = Logger.new('logs/flapjack_diner.log') if File.directory?(logdir)
 
-puts
-
-ada_cell = ARGV[0]
-unless ada_cell && ! ada_cell.empty?
-  puts "==> A cell must be specified for Ada"
+if ARGV.size == 0
+  puts "Error: A cell must be specified for Ada"
+  puts
+  puts "Usage: #{$0} <cell number>"
   exit 1
 end
 
+ada_cell = ARGV.join('')
 ada_id = '8d5fd668-b4c4-481b-84be-9db4e5910110'
 
 # Ensure Ada has the correct cell number on her sms_twilio media
@@ -31,7 +31,7 @@ medium = {
   :rollup_threshold => 3
 }
 
-ada = Flapjack::Diner.contacts().first
+ada = Flapjack::Diner.contacts.first
 
 binding.pry
 
