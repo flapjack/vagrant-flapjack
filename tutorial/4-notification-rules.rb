@@ -38,11 +38,10 @@ binding.pry
 
 # update each rule to remove all contact medias
 
-general_rules.each {|rule|
+general_rules.each do |rule|
   Flapjack::Diner.update_notification_rules(rule[:id], :warning_media => [], :critical_media => [], :unknown_media => [])
   updated_rule = Flapjack::Diner.notification_rules(rule[:id])
-  binding.pry
-}
+end
 
 # Create the notification rule that allows http response-time checks on app servers through to
 # sms_twilio
