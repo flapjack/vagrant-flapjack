@@ -61,6 +61,8 @@ medium = {
 
 ada = Flapjack::Diner.contacts(ada_data[:id]).first
 
+binding.pry
+
 sms_twilios = ada[:links][:media].select {|media_id|
   Flapjack::Diner.media(media_id).first[:type] == 'sms_twilio'
 }
