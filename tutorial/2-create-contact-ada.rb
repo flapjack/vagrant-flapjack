@@ -34,7 +34,14 @@ end
 
 # Ensure Ada has the ALL entity
 
-entity_all = Flapjack::Diner.entities('ALL').first
+entities = Flapjack::Diner.entities('ALL')
+if entities
+  entity_all = entities.first
+else
+  puts "Entity ALL does not exist! Please run earlier examples and try again."
+  exit 1
+end
+
 if entity_all[:links][:contacts].include?(ada_data[:id])
   puts "==> Ada already has the ALL entity"
 else
@@ -42,7 +49,7 @@ else
   Flapjack::Diner.update_entities('ALL', :add_contact => ada_data[:id])
 end
 
-ada = Flapjack::Diner.contacts(ada_data[:id])
+ada = Flapjack::Diner.contacts(ada_data[:id]).first
 
 binding.pry
 
