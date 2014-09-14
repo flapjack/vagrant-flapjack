@@ -27,7 +27,7 @@ ada_id = '8d5fd668-b4c4-481b-84be-9db4e5910110'
 medium = {
   :type => 'sms_twilio',
   :address => ada_cell,
-  :interval => 1,
+  :interval => 20,
   :rollup_threshold => 3
 }
 
