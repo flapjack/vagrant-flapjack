@@ -27,7 +27,6 @@ ada_id = '8d5fd668-b4c4-481b-84be-9db4e5910110'
 ada = Flapjack::Diner.contacts(ada_id).first
 adas_rules_ids = ada[:links][:notification_rules]
 adas_rules = Flapjack::Diner.notification_rules(*adas_rules_ids)
-binding.pry
 
 # find all rules that are not specific to tags or entity names
 
