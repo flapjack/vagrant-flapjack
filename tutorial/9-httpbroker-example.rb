@@ -11,6 +11,8 @@ at_exit do
   Process.kill(15, pid)
 end
 
+puts "==> Started the httpbroker with pid #{pid}"
+
 # Wait for the httpbroker to start
 sleep 2 
 
