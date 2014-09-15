@@ -19,7 +19,7 @@ if ARGV.size == 0
   exit 1
 end
 
-ada_cell = ARGV.join('')
+ada_cell = ARGV.join('').gsub(/[-\(\) ]/, '')
 ada_id = '8d5fd668-b4c4-481b-84be-9db4e5910110'
 
 # Ensure Ada has the correct cell number on her sms_twilio media
