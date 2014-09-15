@@ -23,7 +23,7 @@ if ARGV.size == 0
   exit 1
 end
 
-ada_cell = ARGV.join('')
+ada_cell = ARGV.join('').gsub(/[-\(\) ]/, '')
 
 # Create the ALL entity if it doesn't already exist
 
