@@ -16,11 +16,14 @@ logdir = 'logs'
 Flapjack::Diner.base_uri('127.0.0.1:3081')
 Flapjack::Diner.logger = Logger.new('logs/flapjack_diner.log') if File.directory?(logdir)
 
-ada_cell = ARGV[0]
-unless ada_cell && ! ada_cell.empty?
-  puts "A cell must be specified for Ada"
+if ARGV.size == 0
+  puts "Error: A cell must be specified for Ada"
+  puts
+  puts "Usage: #{$0} <cell number>"
   exit 1
 end
+
+ada_cell = ARGV.join('')
 
 # Create the ALL entity if it doesn't already exist
 
@@ -61,8 +64,6 @@ medium = {
 
 ada = Flapjack::Diner.contacts(ada_data[:id]).first
 
-binding.pry
-
 sms_twilios = ada[:links][:media].select {|media_id|
   Flapjack::Diner.media(media_id).first[:type] == 'sms_twilio'
 }
@@ -98,4 +99,15 @@ else
 end
 
 puts "Ada is now set up to receive notifications for all failing checks via sms to '#{ada_cell}'"
+
+puts
+command = '
+flapjack simulate fail_and_recover \
+  --entity foo-app-01.example.com \
+  --check "HTTP response-time" \
+  --state CRITICAL \
+  --time 1
+'
+puts command
+puts
 
