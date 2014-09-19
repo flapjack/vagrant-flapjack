@@ -44,7 +44,7 @@ vagrant up
 If you get some errors during package installation that look like corrupt package files or similar, you may want to disable the caching by running `vagrant up` with the `DISABLE_VAGRANT_CACHE` environment variable set:
 
 ```bash
-DISABLE_VAGRANT_CACHE=yes vagrnat up
+DISABLE_VAGRANT_CACHE=yes vagrant up
 ```
 
 Accessing
