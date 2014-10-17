@@ -1,0 +1,14 @@
+{
+  "name": "yguenane/repoforge",
+  "version": "0.2.0",
+  "author": "Yanis Guenane <yguenane@gmail.com>",
+  "summary": "A Puppet Module that installs rpmforge's repos ",
+  "license": "Apache License, Version 2.0",
+  "source": "https://github.com/Spredzy/puppet-repoforge",
+  "project_page": "https://github.com/Spredzy/puppet-repoforge",
+  "issues_url": "https://github.com/Spredzy/puppet-repoforge/issues",
+  "description": "A Puppet Module that installs rpmforge's repos ",
+  "dependencies": [
+    {"name":"puppetlabs/stdlib","version_requirement":">= 3.2.0"}
+  ]
+}

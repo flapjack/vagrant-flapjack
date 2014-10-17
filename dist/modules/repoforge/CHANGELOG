@@ -1,0 +1,10 @@
+2013-07-21 Yanis Guenane <yguenane@gmail.com> - 0.2.0
+  * Adding support for includepkgs and exclude on a per-repo basis (@Dave Garbus)
+
+2013-03-24 Yanis Guenane <yguenane@gmail.com> - 0.1.0
+  * Merge @hakamadare pull request (https://github.com/Spredzy/puppet-repoforge/pull/1)
+  * Implement PuppetLabs style unit test
+
+2012-09-12 Yanis Guenane <yguenane@gmail.com> - 0.0.1
+  * Initial Commit
+   
