@@ -11,7 +11,7 @@ end
 
 describe process("redis-server") do
   it { should be_running }
-  its(:args) { should match /127.0.0.1:6380/ }
+  its(:args) { should match /0.0.0.0:6380/ }
 end
 
 describe process("flapjack") do
