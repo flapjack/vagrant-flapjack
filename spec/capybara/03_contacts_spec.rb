@@ -11,9 +11,8 @@ describe  "Contact Management", :type => :feature do
   }
 
   MEDIA = {
-    :email     => 'testguy@test.com',
-    :jabber    => 'testguy@jabber.org',
-    :sms       => '0400000000'
+    :email  => 'testguy@test.com',
+    :jabber => 'testguy@jabber.org'
   }
 
   ENTITY = {
@@ -46,7 +45,6 @@ describe  "Contact Management", :type => :feature do
     # Add some test content
     find('#Email-address').set MEDIA[:email]
     find('#Jabber-address').set MEDIA[:jabber]
-    find('#SMS-address').set MEDIA[:sms]
 
     first(:css, ".close", :visible => false).click
   end
