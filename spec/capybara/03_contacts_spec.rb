@@ -76,7 +76,7 @@ describe  "Contact Management", :type => :feature do
     visit '/contacts'
     click_link "#{NAME[:first_name]} #{NAME[:last_name]}"
 
-    content = [ 'Email', 'Jabber', 'SMS', 'Address', 'Interval',
+    content = [ 'Email', 'Jabber', 'Address', 'Interval',
       'Contact Media', 'Summary Mode', 'Summary Threshold', 'Notification Rules'
     ]
     NAME.values.each { |v| content.push v }
