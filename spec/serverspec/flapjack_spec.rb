@@ -20,7 +20,7 @@ describe process("flapjack") do
 end
 
 describe command('test -p /var/lib/nagios3/rw/nagios.cmd') do
-  it { should return_exit_status 0 }
+  its(:exit_status) { should eq 0 }
 end
 
 describe port(80) do
@@ -37,10 +37,10 @@ describe port(6380) do
 end
 
 describe command('/opt/flapjack/bin/flapjack receiver httpbroker --help') do
-  it { should return_stderr /port/ }
-  it { should return_stderr /server/ }
-  it { should return_stderr /database/ }
-  it { should return_stderr /interval/ }
+  its(:stderr) { should match /port/ }
+  its(:stderr) { should match /server/ }
+  its(:stderr) { should match /database/ }
+  its(:stderr) { should match /interval/ }
 end
 
 describe file('/etc/flapjack/flapjack_config.yaml') do
