@@ -7,7 +7,6 @@ class icinga::common {
           default => '1.10',
     }
     $config_file = "icinga.${icinga_version}.debian.cfg"
-    puts $config_file
     $external_dir = '/var/lib/nagios3/rw'
     $web_user = 'www-data'
 
