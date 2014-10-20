@@ -1,42 +1,53 @@
 # installs and configures nagios
 class nagios::common {
-  $nagios = $operatingsystem ? {
-      CentOS  => 'nagios',
-      RedHat  => 'nagios',
-      Ubuntu  => 'nagios3',
-      default => 'nagios'
+  if $operatingsystem == 'Ubuntu' {
+    $binary = 'nagios3'
+    $nagios_version = $lsbdistrelease ? {
+      12.04   => '3.2',
+      14.04   => '3.5',
+      default => '3.5'
     }
-
-  package { $nagios:
-    ensure  => present
+    $config_file = "nagios.${nagios_version}.debian.cfg"
+    $web_user = 'www-data'
+  }
+  elsif $operatingsystem in [ 'CentOS', 'RedHat' ] {
+    $binary = 'nagios'
+    $nagios_version = $lsbdistrelease ? {
+          6       => '3.5',
+          default => '3.5',
+    }
+    $config_file = "nagios.${nagios_version}.redhat.cfg"
+    $web_user = 'apache'
+  }
+  else {
+    fail 'Everything else unsupported'
   }
 
-  service { $nagios:
+  package { $binary:
+    ensure  => present,
+    require => Class['epel']
+  }
+
+  service { $binary:
     ensure  => running
   }
 
-  # nagios configuration
-  $nagios_version = $lsbdistrelease ? {
-    12.04   => '3.2',
-    14.04   => '3.5',
-    default => '3.5'
-  }
-  file { '/etc/nagios3/nagios.cfg':
-    source  => "puppet:///modules/nagios/etc/nagios3/${nagios_version}.nagios.cfg",
+  file { "/etc/${binary}/nagios.cfg":
+    source  => "puppet:///modules/nagios/etc/nagios3/${config_file}",
     owner   => root,
     group   => root,
     mode    => '0644',
-    require => Package[$nagios],
-    notify  => Service[$nagios]
+    require => Package[$binary],
+    notify  => Service[$binary]
   }
 
-  file { '/etc/nagios3/htpasswd.users':
+  file { "/etc/${binary}/htpasswd.users":
     source  => 'puppet:///modules/nagios/etc/nagios3/htpasswd.users',
     owner   => root,
-    group   => www-data,
+    group   => $web_user,
     mode    => '0640',
-    require => Package[$nagios],
-    notify  => Service[$nagios]
+    require => Package[$binary],
+    notify  => Service[$binary]
   }
 
 }

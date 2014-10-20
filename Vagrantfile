@@ -5,17 +5,22 @@ VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
-  ubuntu_version = ENV['ubuntu_version'] || 'precise'
-  case ubuntu_version
+  distro_release         = ENV['distro_release'] || 'trusty'
+  flapjack_component     = ENV['flapjack_component'] || 'main'
+  flapjack_major_version = ENV['flapjack_major_version'] || 'v1'
+  tutorial_mode          = ENV['tutorial_mode'] || false
+
+  case distro_release
   when /precise/
     config.vm.box      = 'hashicorp/precise64'
     config.vm.box_url  = 'https://vagrantcloud.com/hashicorp/precise64'
   when /trusty/
     config.vm.box      = 'puppetlabs/ubuntu-14.04-64-puppet'
     config.vm.box_url  = 'https://vagrantcloud.com/puppetlabs/ubuntu-14.04-64-puppet'
+  when /centos-6/
+    config.vm.box      = 'puppetlabs/centos-6.5-64-puppet'
+    config.vm.box_url  = 'https://vagrantcloud.com/puppetlabs/boxes/centos-6.5-64-puppet'
   end
-  component = ENV['component'] || 'main'
-  flapjack_major_version = ENV['flapjack_major_version'] || 'v1'
 
   config.vm.hostname = 'flapjack.example.org'
   config.vm.define :flapjack do |t|
@@ -36,16 +41,17 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     puppet.module_path    = 'dist/modules'
     puppet.manifests_path = 'dist/manifests'
     puppet.manifest_file  = 'site.pp'
+    # puppet.options        = "--verbose --debug"
     puppet.facter = {
-      "release"   => ubuntu_version,
-      "component" => component,
-      "flapjack_major_version" => flapjack_major_version
+      "flapjack_component"     => flapjack_component,
+      "flapjack_major_version" => flapjack_major_version,
+      "tutorial_mode"          => tutorial_mode
     }
   end
 
   using_virtualbox = false
   config.vm.provider "virtualbox" do |v|
-    v.customize ["modifyvm", :id, "--memory", 1024]
+    v.customize ["modifyvm", :id, "--memory", 4096]
     v.customize ["setextradata", :id, "VBoxInternal/Devices/mc146818/0/Config/UseUTC", 1]
   end
 
@@ -61,4 +67,3 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
   end
 end
-
