@@ -36,11 +36,13 @@ define apt::ppa(
     if defined(Class[apt]) {
         $proxy_host = $apt::proxy_host
         $proxy_port = $apt::proxy_port
-        case  $proxy_host {
-        false, '': {
+        case $proxy_host {
+          false, '', undef: {
             $proxy_env = []
-        }
-        default: {$proxy_env = ["http_proxy=http://${proxy_host}:${proxy_port}", "https_proxy=http://${proxy_host}:${proxy_port}"]}
+          }
+          default: {
+            $proxy_env = ["http_proxy=http://${proxy_host}:${proxy_port}", "https_proxy=http://${proxy_host}:${proxy_port}"]
+          }
         }
     } else {
         $proxy_env = []
@@ -67,9 +69,6 @@ define apt::ppa(
 
     file { "${sources_list_d}/${sources_list_d_filename}":
         ensure => 'absent',
-        mode   => '0644',
-        owner  => 'root',
-        group  => 'root',
         notify => Exec['apt_update'],
     }
   }

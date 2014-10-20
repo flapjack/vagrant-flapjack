@@ -12,7 +12,8 @@ class apt::params {
           $backports_location = 'http://backports.debian.org/debian-backports'
           $legacy_origin       = true
           $origins             = ['${distro_id} oldstable',
-                                  '${distro_id} ${distro_codename}-security']
+                                  '${distro_id} ${distro_codename}-security',
+                                  '${distro_id} ${distro_codename}-lts']
         }
         'wheezy': {
           $backports_location = 'http://ftp.debian.org/debian/'
@@ -47,6 +48,9 @@ class apt::params {
           $origins            = ['${distro_id}:${distro_codename}-security']
         }
       }
+    }
+    '': {
+      fail('Unable to determine lsbdistid, is lsb-release installed?')
     }
     default: {
       fail("Unsupported lsbdistid (${::lsbdistid})")

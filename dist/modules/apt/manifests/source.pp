@@ -2,11 +2,13 @@
 # add an apt source
 
 define apt::source(
+  $comment           = $name,
   $ensure            = present,
   $location          = '',
   $release           = 'UNDEF',
   $repos             = 'main',
   $include_src       = true,
+  $include_deb       = true,
   $required_packages = false,
   $key               = undef,
   $key_server        = 'keyserver.ubuntu.com',

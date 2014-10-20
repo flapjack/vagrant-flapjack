@@ -36,7 +36,8 @@ class apt(
   $purge_preferences_d  = false,
   $update_timeout       = undef,
   $update_tries         = undef,
-  $sources              = undef
+  $sources              = undef,
+  $fancy_progress       = undef
 ) {
 
   if $::osfamily != 'Debian' {
@@ -102,6 +103,24 @@ class apt(
     recurse => $purge_preferences_d,
   }
 
+  case $fancy_progress {
+    true: {
+      file { '99progressbar':
+        ensure  => present,
+        content => 'Dpkg::Progress-Fancy "1";',
+        path    => "${apt_conf_d}/99progressbar",
+      }
+    }
+    false: {
+      file { '99progressbar':
+        ensure  => absent,
+        path    => "${apt_conf_d}/99progressbar",
+      }
+    }
+    undef: {} # do nothing
+    default: { fail('Valid values for fancy_progress are true or false') }
+  }
+
   case $disable_keys {
     true: {
       file { '99unauth':
@@ -120,19 +139,25 @@ class apt(
     default: { fail('Valid values for disable_keys are true or false') }
   }
 
-  $proxy_set = $proxy_host ? {
-    undef   => absent,
-    default => present
-  }
-
-  file { '01proxy':
-    ensure  => $proxy_set,
-    path    => "${apt_conf_d}/01proxy",
-    content => "Acquire::http::Proxy \"http://${proxy_host}:${proxy_port}\";\n",
-    notify  => Exec['apt_update'],
-    mode    => '0644',
-    owner   => root,
-    group   => root,
+  case $proxy_host {
+    false, '', undef: {
+      file { '01proxy':
+        ensure  => absent,
+        path    => "${apt_conf_d}/01proxy",
+        notify  => Exec['apt_update'],
+      }
+    }
+    default: {
+      file { '01proxy':
+        ensure  => present,
+        path    => "${apt_conf_d}/01proxy",
+        content => "Acquire::http::Proxy \"http://${proxy_host}:${proxy_port}\";\n",
+        notify  => Exec['apt_update'],
+        mode    => '0644',
+        owner   => root,
+        group   => root,
+      }
+    }
   }
 
   file { 'old-proxy-file':
