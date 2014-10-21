@@ -11,9 +11,8 @@ describe  "Contact Management", :type => :feature do
   }
 
   MEDIA = {
-    :email     => 'testguy@test.com',
-    :jabber    => 'testguy@jabber.org',
-    :sms       => '0400000000'
+    :email  => 'testguy@test.com',
+    :jabber => 'testguy@jabber.org'
   }
 
   ENTITY = {
@@ -46,7 +45,6 @@ describe  "Contact Management", :type => :feature do
     # Add some test content
     find('#Email-address').set MEDIA[:email]
     find('#Jabber-address').set MEDIA[:jabber]
-    find('#SMS-address').set MEDIA[:sms]
 
     first(:css, ".close", :visible => false).click
   end
@@ -78,7 +76,7 @@ describe  "Contact Management", :type => :feature do
     visit '/contacts'
     click_link "#{NAME[:first_name]} #{NAME[:last_name]}"
 
-    content = [ 'Email', 'Jabber', 'SMS', 'Address', 'Interval',
+    content = [ 'Email', 'Jabber', 'Address', 'Interval',
       'Contact Media', 'Summary Mode', 'Summary Threshold', 'Notification Rules'
     ]
     NAME.values.each { |v| content.push v }

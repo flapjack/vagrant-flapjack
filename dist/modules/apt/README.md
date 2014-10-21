@@ -33,7 +33,7 @@ To begin using the APT module with default parameters, declare the class
 
     include apt
 
-Puppet code that uses anything from the APT module requires that the core apt class be declared/\s\+$//e
+Puppet code that uses anything from the APT module requires that the core apt class be declared.
 
 Usage
 -----
@@ -54,7 +54,8 @@ The parameters for `apt` are not required in general and are predominantly for d
       purge_sources_list   => false,
       purge_sources_list_d => false,
       purge_preferences_d  => false,
-      update_timeout       => undef
+      update_timeout       => undef,
+      fancy_progress       => undef
     }
 
 Puppet will manage your system's `sources.list` file and `sources.list.d` directory but will do its best to respect existing content.
@@ -193,6 +194,7 @@ Sets the default apt release. This class is particularly useful when using repos
 Adds an apt source to `/etc/apt/sources.list.d/`.
 
     apt::source { 'debian_unstable':
+      comment           => 'This is the iWeb Debian unstable mirror',
       location          => 'http://debian.mirror.iweb.ca/debian/',
       release           => 'unstable',
       repos             => 'main contrib non-free',
@@ -200,7 +202,8 @@ Adds an apt source to `/etc/apt/sources.list.d/`.
       key               => '46925553',
       key_server        => 'subkeys.pgp.net',
       pin               => '-10',
-      include_src       => true
+      include_src       => true,
+      include_deb       => true
     }
 
 If you would like to configure your system so the source is the Puppet Labs APT repository
@@ -212,6 +215,13 @@ If you would like to configure your system so the source is the Puppet Labs APT 
       key_server => 'pgp.mit.edu',
     }
 
+### Facts
+
+There are a few facts included within the apt module describing the state of the apt system:
+
+* `apt_updates` - the number of updates available on the system
+* `apt_security_updates` - the number of updates which are security updates
+* `apt_package_updates` - the package names that are available for update. On Facter 2.0 and newer this will be a list type, in earlier versions it is a comma delimitered string.
 
 #### Hiera example
 <pre>
@@ -225,6 +235,7 @@ apt::sources:
       key_server: 'subkeys.pgp.net'
       pin: '-10'
       include_src: 'true'
+      include_deb: 'true'
 
   'puppetlabs':
       location: 'http://apt.puppetlabs.com'
