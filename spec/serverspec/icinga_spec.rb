@@ -22,7 +22,7 @@ end
 
 # Test for named pipes, as there's no be_pipe in rspec
 describe command('test -p /var/lib/icinga/rw/icinga.cmd') do
-  it { should return_exit_status 0 }
+  its(:exit_status) { should eq 0 }
 end
 
 describe file('/var/log/icinga/icinga.log') do

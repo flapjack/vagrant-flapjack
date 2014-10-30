@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
-gem 'serverspec', '1.14.0'
-gem 'specinfra', '1.25.3'
+gem 'serverspec'
+gem 'specinfra'
 gem 'capybara'
 gem 'selenium-webdriver', require: false
 gem 'poltergeist', require: false
