@@ -20,6 +20,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   when /centos-6/
     config.vm.box      = 'puppetlabs/centos-6.5-64-puppet'
     config.vm.box_url  = 'https://vagrantcloud.com/puppetlabs/boxes/centos-6.5-64-puppet'
+    flapjack_component = flapjack_component == 'main'? 'flapjack' : 'flapjack-experimental'
   end
 
   config.vm.hostname = 'flapjack.example.org'
@@ -41,7 +42,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     puppet.module_path    = 'dist/modules'
     puppet.manifests_path = 'dist/manifests'
     puppet.manifest_file  = 'site.pp'
-    # puppet.options        = "--verbose --debug"
+    puppet.options        = "--verbose --debug"
     puppet.facter = {
       "flapjack_component"     => flapjack_component,
       "flapjack_major_version" => flapjack_major_version,

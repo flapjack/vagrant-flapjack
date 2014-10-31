@@ -22,7 +22,7 @@ node default {
 
   class {'icinga': }
   class {'nagios': }
-  # class {'flapjack': }
+  class {'flapjack': }
 
   if $tutorial_mode == 'true' {
     class {'flapjack-diner': }
