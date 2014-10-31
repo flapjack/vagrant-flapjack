@@ -81,11 +81,24 @@ Flapjack packages now have testing, using both serverspec and capybara.  The ser
 To run all the tests, run:
 
 ```bash
-bundle exec rake
+rake
 ```
 
 To run the serverspec or capybara tests separately, run:
 ```bash
-bundle exec rake serverspec
-bundle exec rake capybara
+rake serverspec
+rake capybara
 ```
+
+NOTE: for some reason you cannot use bundle exec with these commands. Not sure why. You get lots of errors like this one:
+
+```
+  1) Package "flapjack"
+     On host ``
+     Failure/Error: Unable to find matching line from backtrace
+     NoMethodError: undefined method `source_location' for nil:NilClass
+
+       undefined method `source_location' for nil:NilClass
+     # ./spec/serverspec_spec_helper.rb:20:in `block (2 levels) in <top (required)>'
+```
+

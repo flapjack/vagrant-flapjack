@@ -27,4 +27,23 @@ node default {
   if $tutorial_mode == 'true' {
     class {'flapjack-diner': }
   }
+
+  #class { 'sensu':
+  #  rabbitmq_password => 'sausage',
+  #  server            => true,
+  #  api               => true,
+  #  plugins           => [
+  #    'puppet:///data/sensu/plugins/ntp.rb',
+  #  ]
+  #}
+
+  #sensu::handler { 'default':
+  #  command => 'mail -s \'sensu alert\' ops@example',
+  #}
+
+  #sensu::check { 'check_ntp':
+  #  command     => 'PATH=$PATH:/usr/lib/nagios/plugins check_ntp_time -H pool.ntp.org -w 30 -c 60',
+  #  handlers    => 'default',
+  #  subscribers => 'sensu-test'
+  #}
 }
