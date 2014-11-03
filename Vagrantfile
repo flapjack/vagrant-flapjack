@@ -17,6 +17,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   when /trusty/
     config.vm.box      = 'puppetlabs/ubuntu-14.04-64-puppet'
     config.vm.box_url  = 'https://vagrantcloud.com/puppetlabs/ubuntu-14.04-64-puppet'
+  when /wheezy/
+    config.vm.box      = 'puppetlabs/ubuntu-14.04-64-puppet'
+    config.vm.box_url  = 'https://vagrantcloud.com/puppetlabs/ubuntu-14.04-64-puppet'
   when /centos-6/
     config.vm.box      = 'puppetlabs/centos-6.5-64-puppet'
     config.vm.box_url  = 'https://vagrantcloud.com/puppetlabs/boxes/centos-6.5-64-puppet'

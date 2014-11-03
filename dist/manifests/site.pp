@@ -2,7 +2,7 @@
 Exec { path => '/usr/bin:/usr/sbin:/bin:/sbin' }
 
 node default {
-  if $operatingsystem == 'Ubuntu' {
+  if $operatingsystem in [ 'Ubuntu', 'Debian' ] {
     class { 'apt':
       always_apt_update => true,
       before => Class['icinga']

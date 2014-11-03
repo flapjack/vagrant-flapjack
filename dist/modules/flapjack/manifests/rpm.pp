@@ -2,7 +2,7 @@ class flapjack::rpm {
   $os = downcase($operatingsystem)
   yumrepo { 'flapjack':
     ensure => present,
-    baseurl => "http://packages.flapjack.io/rpmtest/${flapjack_major_version}/${flapjack_component}/${os}/${operatingsystemmajrelease}/${architecture}",
+    baseurl => "http://packages.flapjack.io/rpm/${flapjack_major_version}/${flapjack_component}/${os}/${operatingsystemmajrelease}/${architecture}",
     enabled => 'Yes',
     gpgcheck => 'No'
   }

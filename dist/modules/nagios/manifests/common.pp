@@ -1,6 +1,6 @@
 # installs and configures nagios
 class nagios::common {
-  if $operatingsystem == 'Ubuntu' {
+  if $operatingsystem in [ 'Ubuntu', 'Debian' ] {
     $binary = 'nagios3'
     $nagios_version = $lsbdistrelease ? {
       12.04   => '3.2',

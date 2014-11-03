@@ -1,13 +1,13 @@
 # installs and configures icinga
 class icinga::common {
-  if $operatingsystem == 'Ubuntu' {
+  if $operatingsystem in [ 'Ubuntu', 'Debian' ] {
     $icinga_version = $lsbdistrelease ? {
           12.04   => '1.6',
           14.04   => '1.10',
           default => '1.10',
     }
     $config_file = "icinga.${icinga_version}.debian.cfg"
-    $external_dir = '/var/lib/nagios3/rw'
+    $external_dir = '/var/lib/icinga/rw'
     $web_user = 'www-data'
 
     file { '/etc/nagios':

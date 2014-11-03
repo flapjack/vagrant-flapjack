@@ -1,5 +1,5 @@
 class flapjack::install {
-  if $operatingsystem == 'Ubuntu' {
+  $operatingsystem in [ 'Ubuntu', 'Debian' ] {
     class{'flapjack::apt': }
   }
   elsif $operatingsystem in [ 'CentOS', 'RedHat' ] {
