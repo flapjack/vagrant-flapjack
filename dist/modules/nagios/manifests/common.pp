@@ -2,9 +2,10 @@
 class nagios::common {
   if $operatingsystem in [ 'Ubuntu', 'Debian' ] {
     $binary = 'nagios3'
-    $nagios_version = $lsbdistrelease ? {
-      12.04   => '3.2',
-      14.04   => '3.5',
+    $nagios_version = $lsbdistcodename ? {
+      precise => '3.2',
+      trusty  => '3.5',
+      wheezy  => '3.5',
       default => '3.5'
     }
     $config_file = "nagios.${nagios_version}.debian.cfg"
@@ -18,14 +19,21 @@ class nagios::common {
     }
     $config_file = "nagios.${nagios_version}.redhat.cfg"
     $web_user = 'apache'
+    user { $web_user:
+      name    => $web_user,
+      ensure  => 'present',
+      comment => 'Apache',
+      home    => '/var/www',
+      shell   => '/sbin/nologin',
+      system  => true
+    }
   }
   else {
     fail 'Everything else unsupported'
   }
 
   package { $binary:
-    ensure  => present,
-    require => Class['epel']
+    ensure  => present
   }
 
   service { $binary:

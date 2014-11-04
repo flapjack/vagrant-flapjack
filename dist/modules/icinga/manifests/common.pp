@@ -1,6 +1,11 @@
 # installs and configures icinga
 class icinga::common {
   if $operatingsystem in [ 'Ubuntu', 'Debian' ] {
+    $icinga_version = $lsbdistcodename ? {
+      precise => '1.6',
+      trusty  => '1.10',
+      wheezy  => '1.6',
+      default => '1.10'
     $icinga_version = $lsbdistrelease ? {
           12.04   => '1.6',
           14.04   => '1.10',
@@ -8,12 +13,6 @@ class icinga::common {
     }
     $config_file = "icinga.${icinga_version}.debian.cfg"
     $web_user = 'www-data'
-
-    # file { '/etc/nagios':
-    #   ensure  => link,
-    #   target  => '/etc/icinga',
-    #   require => [ Package['icinga'] ],
-    # }
   }
   elsif $operatingsystem in [ 'CentOS', 'RedHat' ] {
     $icinga_version = $operatingsystemmajrelease ? {
@@ -22,15 +21,6 @@ class icinga::common {
     }
     $config_file = "icinga.${icinga_version}.redhat.cfg"
     $web_user = 'apache'
-
-    user { $web_user:
-      name    => $web_user,
-      ensure  => 'present',
-      comment => 'Apache',
-      home    => '/var/www',
-      shell   => '/sbin/nologin',
-      system  => true
-    }
   }
   else {
     fail 'Everything else unsupported'
@@ -40,7 +30,6 @@ class icinga::common {
 
   package { $binary:
     ensure  => present,
-    require => Class['repoforge']
   }
 
   service { $binary:

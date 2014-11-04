@@ -11,16 +11,16 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   tutorial_mode          = ENV['tutorial_mode'] || false
 
   case distro_release
-  when /precise/
+  when 'precise'
     config.vm.box      = 'hashicorp/precise64'
     config.vm.box_url  = 'https://vagrantcloud.com/hashicorp/precise64'
-  when /trusty/
+  when 'trusty'
     config.vm.box      = 'puppetlabs/ubuntu-14.04-64-puppet'
     config.vm.box_url  = 'https://vagrantcloud.com/puppetlabs/ubuntu-14.04-64-puppet'
-  when /wheezy/
-    config.vm.box      = 'puppetlabs/ubuntu-14.04-64-puppet'
-    config.vm.box_url  = 'https://vagrantcloud.com/puppetlabs/ubuntu-14.04-64-puppet'
-  when /centos-6/
+  when 'wheezy'
+    config.vm.box      = 'puphpet/debian75-x64'
+    config.vm.box_url  = 'https://vagrantcloud.com/puphpet/debian75-x64'
+  when 'centos-6'
     config.vm.box      = 'puppetlabs/centos-6.5-64-puppet'
     config.vm.box_url  = 'https://vagrantcloud.com/puppetlabs/boxes/centos-6.5-64-puppet'
     flapjack_component = flapjack_component == 'main'? 'flapjack' : 'flapjack-experimental'

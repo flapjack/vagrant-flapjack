@@ -35,7 +35,7 @@ describe  "Contact Management", :type => :feature do
   it "Adds media to contact" do
     visit '/edit_contacts'
 
-    sleep 1
+    sleep 5
     first('tr.contact_list_item').hover
     first(:css, ".btn.btn-default.contact-media", :visible => false).click
 
@@ -52,7 +52,7 @@ describe  "Contact Management", :type => :feature do
   it "Adds entity to contact" do
     visit '/edit_contacts'
 
-    sleep 1
+    sleep 5
     first('tr.contact_list_item').hover
     first(:css, ".btn.btn-default.contact-entities", :visible => false).click
 
@@ -93,7 +93,7 @@ describe  "Contact Management", :type => :feature do
   it "Delete contact" do
     visit '/edit_contacts'
 
-    sleep 1
+    sleep 5
     first('tr.contact_list_item').hover
     first(:css, ".btn.btn-danger.delete-contact", :visible => false).click
 

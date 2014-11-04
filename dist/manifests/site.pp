@@ -5,7 +5,7 @@ node default {
   if $operatingsystem in [ 'Ubuntu', 'Debian' ] {
     class { 'apt':
       always_apt_update => true,
-      before => Class['icinga']
+      before => Class['nagios']
     }
   }
   elsif $operatingsystem in [ 'CentOS', 'RedHat' ] {
@@ -20,8 +20,8 @@ node default {
     ensure => present
   } ->
 
-  class {'icinga': }
-  class {'nagios': }
+  class {'nagios': } ->
+  class {'icinga': } ->
   class {'flapjack': }
 
   if $tutorial_mode == 'true' {

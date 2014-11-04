@@ -1,5 +1,5 @@
 class flapjack::install {
-  $operatingsystem in [ 'Ubuntu', 'Debian' ] {
+  if $operatingsystem in [ 'Ubuntu', 'Debian' ] {
     class{'flapjack::apt': }
   }
   elsif $operatingsystem in [ 'CentOS', 'RedHat' ] {
@@ -10,7 +10,8 @@ class flapjack::install {
   }
 
   package { 'flapjack':
-    ensure => present
+    ensure => present,
+    before => Service['flapjack']
   }
 
   service { 'flapjack':
