@@ -7,14 +7,13 @@ class icinga::common {
           default => '1.10',
     }
     $config_file = "icinga.${icinga_version}.debian.cfg"
-    $external_dir = '/var/lib/icinga/rw'
     $web_user = 'www-data'
 
-    file { '/etc/nagios':
-      ensure  => link,
-      target  => '/etc/icinga',
-      require => [ Package['icinga'] ],
-    }
+    # file { '/etc/nagios':
+    #   ensure  => link,
+    #   target  => '/etc/icinga',
+    #   require => [ Package['icinga'] ],
+    # }
   }
   elsif $operatingsystem in [ 'CentOS', 'RedHat' ] {
     $icinga_version = $operatingsystemmajrelease ? {
@@ -22,7 +21,6 @@ class icinga::common {
           default => '1.8',
     }
     $config_file = "icinga.${icinga_version}.redhat.cfg"
-    $external_dir = '/var/spool/icinga/cmd'
     $web_user = 'apache'
 
     user { $web_user:
@@ -66,20 +64,4 @@ class icinga::common {
     require => Package['icinga'],
     notify  => Service['icinga'],
   }
-
-  file { $external_dir:
-    ensure  => directory,
-    owner => nagios,
-    group => $web_user,
-    mode => 2750,
-    require => [ Package['icinga'] ],
-  }
-
-  exec { 'fix-group-icinga.cmd':
-    path => "/bin:/usr/bin",
-    command => "chgrp ${web_user} ${external_dir}/nagios.cmd",
-    onlyif => "/usr/bin/test `stat -c \"%G\" ${external_dir}/nagios.cmd` != ${web_user}",
-    require => [ Package['icinga'] ],
-  }
-
 }

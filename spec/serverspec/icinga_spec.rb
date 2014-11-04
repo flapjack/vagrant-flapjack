@@ -20,11 +20,6 @@ describe file('/etc/icinga/icinga.cfg') do
   its(:content) { should match /broker_module=\/usr\/local\/lib\/flapjackfeeder.o redis_host=localhost,redis_port=6380/ }
 end
 
-# Test for named pipes, as there's no be_pipe in rspec
-describe command('test -p /var/lib/icinga/rw/icinga.cmd') do
-  its(:exit_status) { should eq 0 }
-end
-
 describe file('/var/log/icinga/icinga.log') do
   it { should be_file }
 end
