@@ -6,10 +6,6 @@ class icinga::common {
       trusty  => '1.10',
       wheezy  => '1.6',
       default => '1.10'
-    $icinga_version = $lsbdistrelease ? {
-          12.04   => '1.6',
-          14.04   => '1.10',
-          default => '1.10',
     }
     $config_file = "icinga.${icinga_version}.debian.cfg"
     $web_user = 'www-data'
