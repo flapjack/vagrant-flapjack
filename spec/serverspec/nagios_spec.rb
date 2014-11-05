@@ -1,15 +1,21 @@
 require 'serverspec_spec_helper'
 
-describe package('nagios3') do
+if ['redhat', 'centos'].include?(os[:family])
+  binary = 'nagios'
+elsif ['debian', 'ubuntu'].include?(os[:family])
+  binary = 'nagios3'
+end
+
+describe package(binary) do
   it { should be_installed }
 end
 
-describe service('nagios3') do
+describe service(binary) do
   it { should be_enabled   }
   it { should be_running   }
 end
 
-describe process("nagios3") do
+describe process(binary) do
   it { should be_running }
   its(:args) { should match /-d \/etc\/nagios3\/nagios.cfg/ }
 end
@@ -19,12 +25,12 @@ describe user('nagios') do
   it { should belong_to_group 'nagios' }
 end
 
-describe file('/etc/nagios3/nagios.cfg') do
+describe file("/etc/#{binary}/nagios.cfg") do
   it { should be_file }
   its(:content) { should match /enable_notifications=0/ }
   its(:content) { should match /broker_module=\/usr\/local\/lib\/flapjackfeeder.o redis_host=localhost,redis_port=6380/ }
 end
 
-describe file('/var/log/nagios3/nagios.log') do
+describe file("/var/log/#{binary}/nagios.log") do
   it { should be_file }
 end

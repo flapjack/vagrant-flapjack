@@ -19,10 +19,6 @@ describe process("flapjack") do
   its(:args) { should match   /\/opt\/flapjack\/bin\/flapjack server start/ }
 end
 
-describe command('test -p /var/lib/nagios3/rw/nagios.cmd') do
-  its(:exit_status) { should eq 0 }
-end
-
 describe port(80) do
   it { should be_listening }
 end
