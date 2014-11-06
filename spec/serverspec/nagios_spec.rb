@@ -11,13 +11,12 @@ describe package(binary) do
 end
 
 describe service(binary) do
-  it { should be_enabled   }
   it { should be_running   }
 end
 
 describe process(binary) do
   it { should be_running }
-  its(:args) { should match /-d \/etc\/nagios3\/nagios.cfg/ }
+  its(:args) { should match /-d \/etc\/nagios(3)?\/nagios.cfg/ }
 end
 
 describe user('nagios') do

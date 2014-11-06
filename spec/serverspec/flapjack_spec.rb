@@ -19,9 +19,6 @@ describe process("flapjack") do
   its(:args) { should match   /\/opt\/flapjack\/bin\/flapjack server start/ }
 end
 
-describe port(80) do
-  it { should be_listening }
-end
 describe port(3080) do
   it { should be_listening }
 end
