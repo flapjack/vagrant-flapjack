@@ -49,7 +49,7 @@ describe "Test Flapjack before data is added", :type => :feature do
 
   it "Check Contacts" do
     visit '/contacts'
-
+    wait_for_ajax
     content = [ 'Contacts', 'No contacts' ]
     content.each { |c| expect(page).to have_content c }
 

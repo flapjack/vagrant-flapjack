@@ -29,13 +29,16 @@ describe  "Contact Management", :type => :feature do
 
     click_button 'Create'
 
+    wait_for_ajax
+
     NAME.values.each { |v| expect(page).to have_content v }
   end
 
   it "Adds media to contact" do
     visit '/edit_contacts'
 
-    sleep 5
+    wait_for_ajax
+
     first('tr.contact_list_item').hover
     first(:css, ".btn.btn-default.contact-media", :visible => false).click
 
@@ -46,13 +49,16 @@ describe  "Contact Management", :type => :feature do
     find('#Email-address').set MEDIA[:email]
     find('#Jabber-address').set MEDIA[:jabber]
 
+    wait_for_ajax
+
     first(:css, ".close", :visible => false).click
   end
 
   it "Adds entity to contact" do
     visit '/edit_contacts'
 
-    sleep 5
+    wait_for_ajax
+
     first('tr.contact_list_item').hover
     first(:css, ".btn.btn-default.contact-entities", :visible => false).click
 
@@ -66,6 +72,8 @@ describe  "Contact Management", :type => :feature do
       find(".select2-drop li", text: 'foo-app-01').click
       click_button 'Add Entities'
     end
+
+    wait_for_ajax
 
     within(:css, '#contactEntityList') do
       expect(page).to have_content 'foo-app-01'
@@ -86,6 +94,7 @@ describe  "Contact Management", :type => :feature do
     content.each { |c| expect(page).to have_content c }
 
     visit '/check?entity=foo-app-01&check=eggs'
+    wait_for_ajax
     NAME.values.each { |c| expect(page).to have_content c }
     MEDIA.keys.each { |k| expect(page).to have_content k.capitalize }
   end
@@ -93,7 +102,8 @@ describe  "Contact Management", :type => :feature do
   it "Delete contact" do
     visit '/edit_contacts'
 
-    sleep 5
+    wait_for_ajax
+
     first('tr.contact_list_item').hover
     first(:css, ".btn.btn-danger.delete-contact", :visible => false).click
 
