@@ -13,7 +13,7 @@ class icinga::common {
   elsif $operatingsystem in [ 'CentOS', 'RedHat' ] {
     $icinga_version = $operatingsystemmajrelease ? {
           6       => '1.8',
-          default => '1.8',
+          default => '1.8'
     }
     $config_file = "icinga.${icinga_version}.redhat.cfg"
     $web_user = 'apache'
