@@ -1,36 +1,65 @@
 # installs and configures nagios
 class nagios::common {
+  if $operatingsystem in [ 'Ubuntu', 'Debian' ] {
+    $binary = 'nagios3'
+    $nagios_version = $lsbdistcodename ? {
+      precise => '3.2',
+      trusty  => '3.5',
+      wheezy  => '3.5',
+      default => '3.5'
+    }
+    $config_file = "nagios.${nagios_version}.debian.cfg"
+    $web_user = 'www-data'
+  }
+  elsif $operatingsystem in [ 'CentOS', 'RedHat' ] {
+    $binary = 'nagios'
+    $nagios_version = $lsbdistrelease ? {
+          6       => '3.5',
+          default => '3.5',
+    }
+    $config_file = "nagios.${nagios_version}.redhat.cfg"
+    $web_user = 'apache'
+    user { $web_user:
+      name    => $web_user,
+      ensure  => 'present',
+      comment => 'Apache',
+      home    => '/var/www',
+      shell   => '/sbin/nologin',
+      system  => true
+    }
 
-  package { 'nagios3':
-    ensure  => present,
+    package { 'nagios-plugins-all':
+      ensure  => present
+    }
+  }
+  else {
+    fail 'Everything else unsupported'
   }
 
-  service { 'nagios3':
-    ensure  => running,
+  package { $binary:
+    ensure  => present
   }
 
-  # nagios configuration
-  $nagios_version = $lsbdistrelease ? {
-    12.04   => '3.2',
-    14.04   => '3.5',
-    default => '3.5',
+  service { $binary:
+    ensure  => running
   }
-  file { '/etc/nagios3/nagios.cfg':
-    source  => "puppet:///modules/nagios/etc/nagios3/${nagios_version}.nagios.cfg",
+
+  file { "/etc/${binary}/nagios.cfg":
+    source  => "puppet:///modules/nagios/etc/nagios3/${config_file}",
     owner   => root,
     group   => root,
     mode    => '0644',
-    require => Package['nagios3'],
-    notify  => Service['nagios3'],
+    require => Package[$binary],
+    notify  => Service[$binary]
   }
 
-  file { '/etc/nagios3/htpasswd.users':
+  file { "/etc/${binary}/htpasswd.users":
     source  => 'puppet:///modules/nagios/etc/nagios3/htpasswd.users',
     owner   => root,
-    group   => www-data,
+    group   => $web_user,
     mode    => '0640',
-    require => Package['nagios3'],
-    notify  => Service['nagios3'],
+    require => Package[$binary],
+    notify  => Service[$binary]
   }
 
 }

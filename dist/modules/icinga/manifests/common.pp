@@ -1,22 +1,39 @@
 # installs and configures icinga
 class icinga::common {
+  if $operatingsystem in [ 'Ubuntu', 'Debian' ] {
+    $icinga_version = $lsbdistcodename ? {
+      precise => '1.6',
+      trusty  => '1.10',
+      wheezy  => '1.6',
+      default => '1.10'
+    }
+    $config_file = "icinga.${icinga_version}.debian.cfg"
+    $web_user = 'www-data'
+  }
+  elsif $operatingsystem in [ 'CentOS', 'RedHat' ] {
+    $icinga_version = $operatingsystemmajrelease ? {
+          6       => '1.8',
+          default => '1.8'
+    }
+    $config_file = "icinga.${icinga_version}.redhat.cfg"
+    $web_user = 'apache'
+  }
+  else {
+    fail 'Everything else unsupported'
+  }
 
-  package { 'icinga':
+  $binary = 'icinga'
+
+  package { $binary:
     ensure  => present,
   }
 
-  service { 'icinga':
+  service { $binary:
     ensure  => running,
   }
 
-  # icinga configuration
-  $icinga_version = $lsbdistrelease ? {
-    12.04   => '1.6',
-    14.04   => '1.10',
-    default => '1.10',
-  }
-  file { '/etc/icinga/icinga.cfg':
-    source  => "puppet:///modules/icinga/etc/icinga/${icinga_version}.icinga.cfg",
+  file { "/etc/${binary}/icinga.cfg":
+    source  => "puppet:///modules/icinga/etc/icinga/${config_file}",
     owner   => root,
     group   => root,
     mode    => '0644',
@@ -24,34 +41,12 @@ class icinga::common {
     notify  => Service['icinga'],
   }
 
-  file { '/etc/icinga/htpasswd.users':
+  file { "/etc/${binary}/htpasswd.users":
     source  => 'puppet:///modules/icinga/etc/icinga/htpasswd.users',
     owner   => root,
-    group   => www-data,
+    group   => $web_user,
     mode    => '0640',
     require => Package['icinga'],
     notify  => Service['icinga'],
   }
-
-  file { '/etc/nagios':
-    ensure  => link,
-    target  => '/etc/icinga',
-    require => [ Package['icinga'] ],
-  }
-
-  file { '/var/lib/nagios3/rw':
-    ensure  => directory,
-    owner => nagios,
-    group => www-data,
-    mode => 2750,
-    require => [ Package['icinga'] ],
-  }
-
-  exec { 'fix-group-icinga.cmd':
-    path => "/bin:/usr/bin",
-    command => 'chgrp www-data /var/lib/nagios3/rw/nagios.cmd',
-    onlyif => '/usr/bin/test `stat -c "%G" /var/lib/nagios3/rw/nagios.cmd` != www-data',
-    require => [ Package['icinga'] ],
-  }
-
 }

@@ -1,0 +1,18 @@
+{
+  "CHANGELOG": "a4b99edbecfca1b9db0c740ff400a544",
+  "LICENSE": "a5fc79f82be0248ad3e7325c8d5bbfcb",
+  "Modulefile": "c24eed05627122b3e8cf589d81dfa656",
+  "README.md": "30c27b9a6aed34079e458d555f0720cd",
+  "Rakefile": "d9fad069cf2dfdc0541548e278e39bbb",
+  "files/RPM-GPG-KEY-rpmforge-dag": "a44f72c72b873d0f8f3021690bb3e52f",
+  "lib/facter/os_maj_version.rb": "0f19c87eca831a094fe83b1a79937b76",
+  "manifests/init.pp": "c1b987c4afb18419b05884fff1686ed9",
+  "manifests/params.pp": "9f9b6423b79b5f4ebc327a24c7b95743",
+  "manifests/rpm_gpg_key.pp": "f3437fef27c2ba1fef10b8735a14c86c",
+  "manifests/yumrepo.pp": "ae63de56745bc3ef51e0074d04c5c7e2",
+  "spec/classes/repoforge_spec.rb": "2ad8e96c1ebbcb47369ab7e3df6b5f37",
+  "spec/defines/rpm_gpg_key_spec.rb": "0824ccc1ce28051d0f08afce2884c6bd",
+  "spec/defines/yumrepo_spec.rb": "5eccf0ce8f32b987f01973c502d0d883",
+  "spec/spec_helper.rb": "3ea886dd135e120afa31e0aab12e85b0",
+  "tests/init.pp": "a94a9da9c9f05f7a677186cacd3ef746"
+}
