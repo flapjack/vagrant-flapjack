@@ -27,6 +27,10 @@ class nagios::common {
       shell   => '/sbin/nologin',
       system  => true
     }
+
+    package { 'nagios-plugins-all':
+      ensure  => present
+    }
   }
   else {
     fail 'Everything else unsupported'

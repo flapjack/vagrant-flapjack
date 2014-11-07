@@ -2,6 +2,8 @@ require 'capybara_spec_helper'
 
 describe "Simulate a failed check", :type => :feature do
   before :all do
+    # Bring up apache if it isn't already to stop failing nagios checks for localhost
+    system("vagrant ssh -c 'if ! curl localhost:80; then sudo service httpd start; sudo touch /var/www/html/index.html; sleep 40; fi'")
     system("vagrant ssh -c 'sudo /opt/flapjack/bin/flapjack simulate fail --check bacon -i 1 -t 0.1' > /dev/null")
   end
 

@@ -1,6 +1,11 @@
 require 'capybara_spec_helper'
 
 describe "Test Flapjack before data is added", :type => :feature do
+  before :all do
+    # Bring up apache if it isn't already to stop failing nagios checks for localhost
+    system("vagrant ssh -c 'if ! curl localhost:80; then sudo service httpd start; sudo touch /var/www/html/index.html; sleep 40; fi' > /dev/null")
+  end
+
   after :each do
     links = [ 'Summary', 'Entities', 'Failing Entities', 'Checks', 'Failing Checks', 'Contacts', 'Internal Statistics' ]
     links.each { |l| expect(page).to have_content l }
@@ -32,7 +37,7 @@ describe "Test Flapjack before data is added", :type => :feature do
 
     content = [ 'Checks', '0 failing out of',
       'Entity', 'Check', 'State', 'Summary', 'Last State Change', 'Last Update', 'Last Notification',
-      'Load', 'Users', 'Disk Space', 'HTTP', 'SSH', 'Total Processes',
+      'Load', 'Users', 'HTTP', 'SSH', 'Total Processes',
       'load average', 'users currently logged in', 'DISK OK', 'HTTP OK', 'SSH OK', 'PROCS OK'
     ]
     content.each { |c| expect(page).to have_content c }

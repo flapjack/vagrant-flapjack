@@ -16,7 +16,6 @@ end
 Capybara.configure do |config|
   config.app_host = 'http://localhost:3080'
   config.default_wait_time = 5
-  config.include WaitForAjax, type: :feature
 end
 
 RSpec.configure do |config|
@@ -36,4 +35,5 @@ RSpec.configure do |config|
     end
     Capybara.default_driver = ENV['FF'] == 'true' ? Capybara.javascript_driver : :poltergeist
   end
+  config.include WaitForAjax, type: :feature
 end
