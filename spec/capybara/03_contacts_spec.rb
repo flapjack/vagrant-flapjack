@@ -84,6 +84,8 @@ describe  "Contact Management", :type => :feature do
     visit '/contacts'
     click_link "#{NAME[:first_name]} #{NAME[:last_name]}"
 
+    wait_for_ajax
+
     content = [ 'email', 'jabber', 'Media', 'Address', 'Interval',
       'Contact Media', 'Summary Mode', 'Summary Threshold', 'Notification Rules'
     ]
