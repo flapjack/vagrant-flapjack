@@ -19,11 +19,19 @@ git clone https://github.com/flapjack/vagrant-flapjack.git
 cd vagrant-flapjack
 ```
 
-Flapjack Vagrant currently supports both Ubuntu Precise and Ubuntu Trusty.  To choose your version, use one of the following to export the ubuntu_version environment variable.  The default is currently Ubuntu Precise.
+Flapjack Vagrant currently supports the following Linux distro releases:
+- `precise` - Ubuntu 12.04
+- `trusty` - Ubuntu 14.04 (default)
+- `wheezy` - Debian 7.7
+- `centos-6` - CentOS 6
+
+To choose the distro & release version, use one of the following to export the distro_release environment variable.
 
 ```bash
-export ubuntu_version='precise'
-export ubuntu_version='trusty'
+export distro_release='precise'
+export distro_release='trusty'
+export distro_release='wheezy'
+export distro_release='centos-6'
 ```
 
 Flapjack Vagrant can install either the latest main experimental package from a given release.  To choose your component and release export the following variables.   The default is the v1 main release.
@@ -31,6 +39,7 @@ Flapjack Vagrant can install either the latest main experimental package from a 
 ```bash
 export flapjack_component='experimental'
 export flapjack_major_version='v1'
+
 # Or if you want to use the 0.9 series:
 export flapjack_major_version='0.9'
 ```
