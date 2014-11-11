@@ -34,7 +34,7 @@ export distro_release='wheezy'
 export distro_release='centos-6'
 ```
 
-Flapjack Vagrant can install either the latest main experimental package from a given release.  To choose your component and release export the following variables.   The default is the v1 main release.
+Flapjack Vagrant can install either the latest *main* (default) or *experimental* package from a given major series.  To choose your component and major release export the following variables.   The default is the v1 main release.
 
 ```bash
 export flapjack_component='experimental'
@@ -90,6 +90,7 @@ Flapjack packages now have testing, using both serverspec and capybara.  The ser
 To run all the tests, run:
 
 ```bash
+bundle
 rake
 ```
 
