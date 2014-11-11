@@ -18,12 +18,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     config.vm.box      = 'puppetlabs/ubuntu-14.04-64-puppet'
     config.vm.box_url  = 'https://vagrantcloud.com/puppetlabs/ubuntu-14.04-64-puppet'
   when 'wheezy'
-    config.vm.box      = 'puphpet/debian75-x64'
-    config.vm.box_url  = 'https://vagrantcloud.com/puphpet/debian75-x64'
+    config.vm.box      = 'cargomedia/debian-7-amd64-default'
+    config.vm.box_url  = 'https://vagrantcloud.com/cargomedia/debian-7-amd64-default'
   when 'centos-6'
     config.vm.box      = 'puppetlabs/centos-6.5-64-puppet'
     config.vm.box_url  = 'https://vagrantcloud.com/puppetlabs/boxes/centos-6.5-64-puppet'
-    flapjack_component = flapjack_component == 'main'? 'flapjack' : 'flapjack-experimental'
+    flapjack_component = flapjack_component == 'main' ? 'flapjack' : 'flapjack-experimental'
   end
 
   config.vm.hostname = 'flapjack.example.org'
@@ -45,7 +45,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     puppet.module_path    = 'dist/modules'
     puppet.manifests_path = 'dist/manifests'
     puppet.manifest_file  = 'site.pp'
-    #puppet.options        = "--verbose --debug"
+    # puppet.options        = "--verbose --debug"
     puppet.facter = {
       "flapjack_component"     => flapjack_component,
       "flapjack_major_version" => flapjack_major_version,

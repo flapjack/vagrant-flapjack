@@ -15,6 +15,6 @@ class flapjack::install {
   }
 
   service { 'flapjack':
-    ensure  => running,
+    ensure  => running
   }
 }
