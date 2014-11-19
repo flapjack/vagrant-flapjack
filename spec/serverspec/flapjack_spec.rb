@@ -1,12 +1,26 @@
 require 'serverspec_spec_helper'
 
+describe service('redis-flapjack'), :if => os[:family] == 'ubuntu' do
+  it { should be_enabled }
+end
+describe service('redis-flapjack'), :if => os[:family] == 'redhat' do
+  it { should_not be_enabled }
+end
+
+describe service('flapjack'), :if => os[:family] == 'ubuntu' do
+  it { should be_enabled }
+end
+describe service('flapjack'), :if => os[:family] == 'redhat' do
+  it { should_not be_enabled }
+end
+
 describe package('flapjack') do
   it { should be_installed }
 end
 
 describe service('flapjack') do
-  it { should be_enabled   }
-  it { should be_running   }
+
+  it { should be_running }
 end
 
 describe process("redis-server") do
