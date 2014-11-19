@@ -14,7 +14,7 @@ class flapjack::install {
     before => Service['flapjack']
   }
 
-  service { 'flapjack':
+  service { [ 'redis-flapjack', 'flapjack' ]:
     ensure  => running
   }
 }
