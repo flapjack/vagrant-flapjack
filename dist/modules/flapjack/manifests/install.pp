@@ -10,11 +10,11 @@ class flapjack::install {
   }
 
   package { 'flapjack':
-    ensure => present,
-    before => Service['flapjack']
+    ensure => present
   }
 
   service { [ 'redis-flapjack', 'flapjack' ]:
-    ensure  => running
+    ensure  => running,
+    require => Package['flapjack']
   }
 }
