@@ -5,7 +5,8 @@ describe 'apt::backports', :type => :class do
     let :facts do
       {
         'lsbdistcodename' => 'Karmic',
-        'lsbdistid'       => 'Ubuntu'
+        'lsbdistid'       => 'Ubuntu',
+        'osfamily'        => 'Debian'
       }
     end
 
@@ -36,7 +37,8 @@ describe 'apt::backports', :type => :class do
     let :facts do
       {
         'lsbdistcodename' => 'Karmic',
-        'lsbdistid'       => 'Ubuntu'
+        'lsbdistid'       => 'Ubuntu',
+        'osfamily'        => 'Debian'
       }
     end
 
@@ -57,6 +59,7 @@ describe 'apt::backports', :type => :class do
       {
         'lsbdistcodename' => 'Squeeze',
         'lsbdistid'       => 'Debian',
+        'osfamily'        => 'Debian'
       }
     end
 
@@ -71,12 +74,55 @@ describe 'apt::backports', :type => :class do
     }
   end
 
+  describe "when turning on backports for linux mint debian edition" do
+
+    let :facts do
+      {
+        'lsbdistcodename' => 'debian',
+        'lsbdistid'       => 'LinuxMint',
+        'osfamily'        => 'Debian'
+      }
+    end
+
+    it { should contain_apt__source('backports').with({
+        'location'   => 'http://ftp.debian.org/debian/',
+        'release'    => 'wheezy-backports',
+        'repos'      => 'main contrib non-free',
+        'key'        => '46925553',
+        'key_server' => 'pgp.mit.edu',
+        'pin'        => 200,
+      })
+    }
+  end
+
+  describe "when turning on backports for linux mint 17 (ubuntu-based)" do
+
+    let :facts do
+      {
+        'lsbdistcodename' => 'qiana',
+        'lsbdistid'       => 'LinuxMint',
+        'osfamily'        => 'Debian'
+      }
+    end
+
+    it { should contain_apt__source('backports').with({
+        'location'   => 'http://us.archive.ubuntu.com/ubuntu',
+        'release'    => 'trusty-backports',
+        'repos'      => 'main universe multiverse restricted',
+        'key'        => '437D05B5',
+        'key_server' => 'pgp.mit.edu',
+        'pin'        => 200,
+      })
+    }
+  end
+
   describe "when turning on backports for debian squeeze but using your own mirror" do
 
     let :facts do
       {
         'lsbdistcodename' => 'Squeeze',
-        'lsbdistid'       => 'Debian'
+        'lsbdistid'       => 'Debian',
+        'osfamily'        => 'Debian'
       }
     end
 

@@ -16,6 +16,12 @@ node default {
     fail 'Everything else unsupported'
   }
 
+  $ruby_json = $operatingsystem ? {
+    /(Ubuntu|Debian)/ => 'ruby-json',
+    /(CentOS|RedHat)/ => 'rubygem-json',
+    default           => 'ruby-json',
+  }
+
   package { 'curl':
     ensure => present
   } ->
@@ -28,22 +34,46 @@ node default {
     class {'flapjack-diner': }
   }
 
-  #class { 'sensu':
-  #  rabbitmq_password => 'sausage',
-  #  server            => true,
-  #  api               => true,
-  #  plugins           => [
-  #    'puppet:///data/sensu/plugins/ntp.rb',
-  #  ]
-  #}
+  class { 'rabbitmq':
+  } ->
 
-  #sensu::handler { 'default':
-  #  command => 'mail -s \'sensu alert\' ops@example',
-  #}
+  rabbitmq_vhost { '/sensu':
+    ensure => present,
+  } ->
 
-  #sensu::check { 'check_ntp':
-  #  command     => 'PATH=$PATH:/usr/lib/nagios/plugins check_ntp_time -H pool.ntp.org -w 30 -c 60',
-  #  handlers    => 'default',
-  #  subscribers => 'sensu-test'
-  #}
+  rabbitmq_user { 'sensu':
+    admin    => false,
+    password => 'tangymango5',
+  } ->
+
+  rabbitmq_user_permissions { 'sensu@/sensu':
+    configure_permission => '.*',
+    read_permission      => '.*',
+    write_permission     => '.*',
+  } ->
+
+  package { $ruby_json:
+    ensure => present
+  } ->
+
+  class { 'redis': } ->
+
+  class { 'sensu':
+    rabbitmq_password => 'tangymango5',
+    server            => true,
+    api               => true,
+    plugins           => [
+      'puppet:///data/sensu/plugins/ntp.rb',
+    ]
+  }
+
+  sensu::handler { 'default':
+    command => 'mail -s \'sensu alert\' ops@example',
+  }
+
+  sensu::check { 'check_ntp':
+    command     => 'PATH=$PATH:/usr/lib/nagios/plugins check_ntp_time -H pool.ntp.org -w 30 -c 60',
+    handlers    => 'default',
+    subscribers => 'sensu-test'
+  }
 }

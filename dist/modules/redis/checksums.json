@@ -1,0 +1,20 @@
+{
+  "Gemfile.lock": "183961a8885783a5f617da58b8d3b8d1",
+  "LICENSE": "391c93fec414bcea2a8aa9d34782c17b",
+  "manifests/init.pp": "bcb3d66c88ad31fb8f933ddc586f4d98",
+  "metadata.json": "12a3ab55ad997f47a4a1dfe0b7a6f33b",
+  "Gemfile": "31d67830f694c2af4c709d46c513bbc7",
+  "Rakefile": "64c3c39c53f956c314dd2fd3306ac7b4",
+  "templates/redis.logrotate.erb": "c1d0b11eeb8252e6be3f3e0cfe269414",
+  "tests/init.pp": "4f1bf99f7776bf4ae3bc304153173142",
+  "lib/facter/redis_version.rb": "12731a5fba5a4248121b233015c2543e",
+  "CHANGELOG": "9a64019bcf8d0b8d4153ff6c8055b184",
+  "Modulefile": "94f5ef195e8a7cda5836dccad8fb62c9",
+  "Puppetfile.lock": "2000673d5fe07bc06b56a9b9d17d9ba2",
+  "README.md": "67b12cf482c95056ac8f06e0386bb2e4",
+  "tests/Puppetfile": "5580d0db50059fdc3d5ce7fef4198251",
+  "Vagrantfile": "e449f8f4135bb89ad8cf23a714515630",
+  "manifests/params.pp": "09673263bc33b10bd38e28f6c6ba5a06",
+  "templates/redis.conf.erb": "1bb31a8a045a915da5367db8ab008805",
+  "spec/spec_helper.rb": "a55d1e6483344f8ec6963fcb2c220372"
+}

@@ -1,0 +1,17 @@
+{
+  "ChangeLog": "c75ded2e25a037060bf2699eea07af2f",
+  "Gemfile": "3ad486d60d90bfe4395b368b95481e01",
+  "LICENSE": "99219472697a01561e7630d63aaecdc1",
+  "README.md": "eecd73855d8815a56cbf13de841208f5",
+  "Rakefile": "ab253b919e7093c2a5eb7adf0e39ffbc",
+  "manifests/base.pp": "be6f023ad7e949a72f2b80115f812f9c",
+  "manifests/init.pp": "1fbf64472b67ecceeffde36b91145884",
+  "manifests/params.pp": "5d6e48500365bc1791488e3a3c5ef788",
+  "metadata.json": "9294089936b9199e0dd82a032089b4e7",
+  "spec/classes/sysctl_base_spec.rb": "6241cf3e290871c00b1bb3bbd5490108",
+  "spec/defines/sysctl_init_spec.rb": "21d524df70961750cb22f6b83349093e",
+  "spec/spec_helper.rb": "3ea886dd135e120afa31e0aab12e85b0",
+  "templates/sysctl.d-file.erb": "47e03b3e2b70bc7586271be8b9a6473d",
+  "tests/base.pp": "1ba89838432dbc94339097327c19ae3d",
+  "tests/init.pp": "e70e5327b9840b44699bb7fae71d47cd"
+}
