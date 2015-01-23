@@ -41,8 +41,13 @@ node default {
     ensure => present,
   } ->
 
+  rabbitmq_user { 'admin':
+    admin    => true,
+    password => 'frostyfruit5',
+  } ->
+
   rabbitmq_user { 'sensu':
-    admin    => false,
+    admin    => true,
     password => 'tangymango5',
   } ->
 
@@ -59,12 +64,19 @@ node default {
   class { 'redis': } ->
 
   class { 'sensu':
-    rabbitmq_password => 'tangymango5',
+    install_repo      => true,
     server            => true,
+    manage_services   => true,
+    manage_user       => true,
+    rabbitmq_password => 'tangymango5',
+    rabbitmq_vhost    => '/sensu',
     api               => true,
-    plugins           => [
-      'puppet:///data/sensu/plugins/ntp.rb',
-    ]
+    api_user          => 'admin',
+    api_password      => 'secret',
+    client_address    => $::ipaddress_eth0,
+    #plugins           => [
+    #  'puppet:///data/sensu/plugins/ntp.rb',
+    #]
   }
 
   sensu::handler { 'default':
@@ -74,6 +86,66 @@ node default {
   sensu::check { 'check_ntp':
     command     => 'PATH=$PATH:/usr/lib/nagios/plugins check_ntp_time -H pool.ntp.org -w 30 -c 60',
     handlers    => 'default',
-    subscribers => 'sensu-test'
+    subscribers => 'sensu-test',
+    type        => 'metric',
   }
+
+  sensu::check { 'check_flapper':
+    command     => "PATH=$PATH:/usr/lib/nagios/plugins check_tcp -H ${::ipaddress_eth0} -p 12345",
+    interval    => 5,
+    handlers    => 'flapjack',
+    standalone  => true,
+    type        => 'metric',
+  }
+
+  sensu::extension { 'flapjack':
+      source  => 'puppet:///modules/sensu/extensions/handlers/flapjack.rb',
+      config  => {
+        'host' => 'localhost',
+        'port' => '6380',
+        'db'   => '0',
+      }
+  }
+
+  # Installs the uchiwa dashboard for sensu
+  # 0.0.0.0:3000
+  # uchiwa, uchiwa
+
+  package { 'uchiwa':
+    ensure => present,
+  } ->
+
+  file { '/etc/sensu/uchiwa.json':
+    ensure  => present,
+    content => '
+  {
+    "sensu": [
+      {
+        "name": "Site1",
+        "host": "localhost",
+        "port": 4567,
+        "timeout": 5,
+        "user": "admin",
+        "pass": "secret"
+      }
+    ],
+    "uchiwa": {
+      "host": "0.0.0.0",
+      "port": 3000,
+      "user": "uchiwa",
+      "pass": "uchiwa",
+      "interval": 5
+    }
+  }',
+    require => Package['uchiwa'],
+    notify  => Service['uchiwa'],
+  }
+
+  service { 'uchiwa':
+    ensure  => running,
+    enable  => true,
+    require => [ File['/etc/sensu/uchiwa.json'],Package['uchiwa'] ]
+  }
+
+
 }
