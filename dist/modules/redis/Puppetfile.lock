@@ -1,0 +1,16 @@
+FORGE
+  remote: http://forge.puppetlabs.com
+  specs:
+    thias/sysctl (0.3.0)
+
+GIT
+  remote: git://github.com/fsalum/puppet-redis.git
+  ref: master
+  sha: ce7f2b7a8fae3b696e9cb3cba86353869c935ba7
+  specs:
+    redis (0.0.10)
+      thias/sysctl (= 0.3.0)
+
+DEPENDENCIES
+  redis (>= 0)
+
