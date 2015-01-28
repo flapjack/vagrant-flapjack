@@ -11,13 +11,13 @@ end
 
 describe process("icinga") do
   it { should be_running }
-  its(:args) { should match /-d \/etc\/icinga\/icinga.cfg/ }
+  its(:args) { should match '-d /etc/icinga/icinga.cfg' }
 end
 
 describe file('/etc/icinga/icinga.cfg') do
   it { should be_file }
   its(:content) { should match /enable_notifications=0/ }
-  its(:content) { should match /broker_module=\/usr\/local\/lib\/flapjackfeeder.o redis_host=localhost,redis_port=6380/ }
+  its(:content) { should match 'broker_module=/usr/local/lib/flapjackfeeder.o redis_host=localhost,redis_port=6380' }
 end
 
 describe file('/var/log/icinga/icinga.log') do
