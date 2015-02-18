@@ -56,6 +56,31 @@ If you get some errors during package installation that look like corrupt packag
 DISABLE_VAGRANT_CACHE=yes vagrant up
 ```
 
+Optional Extras
+---------------
+
+* Tutorial Mode *
+
+```bash
+export tutorial_mode="true"
+```
+
+This installs the [Flapjack Diner](https://rubygems.org/gems/flapjack-diner) Ruby gem. It could be useful for running through tutorials. FIXME: is it useful / required for any published tutorials?
+
+* With Sensu *
+
+```bash
+export with_sensu="true"
+```
+
+This will also install and configure Sensu along with its depdencies (RabbitMQ, OS's Redis).
+
+If you already created your vm you can add Sensu by doing a provision, eg:
+
+```bash
+with_sensu="true" vagrant provision
+```
+
 Accessing
 ---------
 

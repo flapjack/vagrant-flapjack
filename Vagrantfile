@@ -5,10 +5,11 @@ VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
-  distro_release         = ENV['distro_release'] || 'trusty'
-  flapjack_component     = ENV['flapjack_component'] || 'main'
+  distro_release         = ENV['distro_release']         || 'trusty'
+  flapjack_component     = ENV['flapjack_component']     || 'main'
   flapjack_major_version = ENV['flapjack_major_version'] || 'v1'
-  tutorial_mode          = ENV['tutorial_mode'] || false
+  tutorial_mode          = ENV['tutorial_mode']          || 'false'
+  with_sensu             = ENV['with_sensu']             || 'false'
 
   case distro_release
   when 'precise'
@@ -55,7 +56,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     puppet.facter = {
       "flapjack_component"     => flapjack_component,
       "flapjack_major_version" => flapjack_major_version,
-      "tutorial_mode"          => tutorial_mode
+      "tutorial_mode"          => tutorial_mode,
+      "with_sensu"             => with_sensu
     }
   end
 
