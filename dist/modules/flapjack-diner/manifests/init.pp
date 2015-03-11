@@ -1,7 +1,14 @@
 class flapjack-diner {
   case $operatingsystem {
-    'RedHat', 'CentOS': { package { [ 'ruby193', 'ruby193-ruby-devel' ]: ensure => present } }
-    'Ubuntu':           { package { 'ruby1.9.1-full': ensure => present } }
+    'RedHat', 'CentOS': {
+      package { 'centos-release-SCL':
+        ensure => present
+      } ->
+      package { [ 'ruby193', 'ruby193-ruby-devel' ]:
+        ensure => present
+      }
+    }
+    'Ubuntu', 'Debian': { package { [ 'ruby1.9.1-full', 'build-essential', 'libsqlite3-dev' ]: ensure => present } }
     default:            { fail('Unsupported operating system') }
   }
 

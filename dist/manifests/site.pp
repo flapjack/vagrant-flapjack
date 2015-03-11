@@ -26,12 +26,13 @@ node default {
     ensure => present
   } ->
 
-  class {'nagios': } ->
-  class {'icinga': } ->
-  class {'flapjack': }
+  class { 'mailcatcher': }
+  class { 'nagios': } ->
+  class { 'icinga': } ->
+  class { 'flapjack': }
 
   if $tutorial_mode == 'true' {
-    class {'flapjack-diner': }
+    class { 'flapjack-diner': }
   }
 
   if $with_sensu == 'true' {
