@@ -7,6 +7,14 @@ class rabbitmq::install {
   $package_provider = $rabbitmq::package_provider
   $package_source   = $rabbitmq::real_package_source
 
+  # Erlang is required on rpm-based systems, and isn't automatically installed as a dependency
+  if $operatingsystem in [ 'CentOS', 'RedHat' ] {
+    package { 'erlang':
+      ensure => present,
+      before => Package['rabbitmq-server'],
+    }
+  }
+
   package { 'rabbitmq-server':
     ensure   => $package_ensure,
     name     => $package_name,
