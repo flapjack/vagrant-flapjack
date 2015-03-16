@@ -36,6 +36,11 @@ node default {
   }
 
   if $with_sensu == 'true' {
+    file { '/tmp/include_sensu_tests':
+      ensure => present,
+    }
+
+
     class { 'rabbitmq':
     } ->
 
