@@ -8,8 +8,9 @@ set :backend, :ssh
 # This should be completely unnecessary.
 host = 'flapjack'
 
-puts 'Bringing up vagrant if required'
-`vagrant up #{host}`
+puts "Bringing up vagrant for host #{host} if required"
+system("vagrant up #{host}")
+puts "Done."
 
 config = Tempfile.new('', Dir.tmpdir)
 `vagrant ssh-config #{host} > #{config.path}`
