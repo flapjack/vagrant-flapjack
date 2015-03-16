@@ -12,8 +12,14 @@ class mailcatcher {
         ensure => present
       }
     }
-    'Ubuntu', 'Debian': { package { [ 'ruby1.9.1-full', 'build-essential', 'libsqlite3-dev' ]: ensure => present } }
-    default:            { fail('Unsupported operating system') }
+    'Ubuntu', 'Debian': {
+      package { [ 'ruby1.9.1-full', 'build-essential', 'libsqlite3-dev' ]:
+        ensure => present
+      }
+    }
+    default: {
+      fail('Unsupported operating system')
+    }
   }
 
   package { 'make':
@@ -21,7 +27,7 @@ class mailcatcher {
   } ->
 
   exec { 'if [[ -f /opt/rh/ruby193/enable ]]; then echo "export PATH=\${PATH}:/opt/rh/ruby193/root/usr/local/bin" | tee -a /opt/rh/ruby193/enable && source /opt/rh/ruby193/enable; fi && gem install mailcatcher':
-    path     => "/usr/bin:/usr/sbin:/bin",
+    path     => "/usr/bin:/usr/sbin:/bin:/opt/rh/ruby193/root/usr/local/bin",
     provider => "shell",
     unless   => "gem list --local | grep mailcatcher",
     before   => Exec['mailcatcher']
@@ -30,7 +36,8 @@ class mailcatcher {
   exec { 'mailcatcher':
     command  => 'if [[ -f /opt/rh/ruby193/enable ]]; then source /opt/rh/ruby193/enable; fi && mailcatcher --ip 0.0.0.0',
     provider => "shell",
-    path     => '/usr/local/bin:/usr/bin'
+    unless   => "pgrep mailcatcher",
+    path     => '/usr/local/bin:/usr/bin:/opt/rh/ruby193/root/usr/local/bin'
   }
 
   exec { 'enable-mailcatcher-in-flapjack':
