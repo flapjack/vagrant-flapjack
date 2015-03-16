@@ -13,8 +13,16 @@ class flapjack::install {
     ensure => present
   }
 
-  service { [ 'redis-flapjack', 'flapjack' ]:
+  service { [ 'redis-flapjack' ]:
     ensure  => running,
-    require => Package['flapjack']
+    require => Package['flapjack'],
+  }
+
+  service { [ 'flapjack' ]:
+    ensure  => running,
+    require => [
+      Package['flapjack'],
+      Service['redis-flapjack']
+    ]
   }
 }
