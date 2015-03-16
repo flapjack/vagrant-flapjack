@@ -27,17 +27,17 @@ class mailcatcher {
   } ->
 
   exec { 'if [[ -f /opt/rh/ruby193/enable ]]; then echo "export PATH=\${PATH}:/opt/rh/ruby193/root/usr/local/bin" | tee -a /opt/rh/ruby193/enable && source /opt/rh/ruby193/enable; fi && gem install mailcatcher':
-    path     => "/usr/bin:/usr/sbin:/bin:/opt/rh/ruby193/root/usr/local/bin",
-    provider => "shell",
-    unless   => "gem list --local | grep mailcatcher",
+    path     => '/usr/bin:/usr/sbin:/bin',
+    provider => 'shell',
+    unless   => 'gem list --local | grep mailcatcher',
     before   => Exec['mailcatcher']
   }
 
   exec { 'mailcatcher':
     command  => 'if [[ -f /opt/rh/ruby193/enable ]]; then source /opt/rh/ruby193/enable; fi && mailcatcher --ip 0.0.0.0',
-    provider => "shell",
-    unless   => "pgrep mailcatcher",
-    path     => '/usr/local/bin:/usr/bin:/opt/rh/ruby193/root/usr/local/bin'
+    provider => 'shell',
+    unless   => 'pgrep mailcatcher',
+    path     => '/usr/local/bin:/usr/bin'
   }
 
   exec { 'enable-mailcatcher-in-flapjack':

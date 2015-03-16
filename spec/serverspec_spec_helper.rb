@@ -9,11 +9,15 @@ set :backend, :ssh
 host = 'flapjack'
 
 puts "Bringing up vagrant for host #{host} if required"
-system("vagrant up #{host}")
-puts "Done."
+exit_status = system("vagrant up #{host}")
+unless exit_status
+  puts "Error bringing up vagrant for host #{host}. Exiting!"
+  exit 1
+end
+puts "Done ensuring vagrant is up for host #{host}."
 
 config = Tempfile.new('', Dir.tmpdir)
-`vagrant ssh-config #{host} > #{config.path}`
+system("vagrant ssh-config #{host} > #{config.path}")
 
 options = Net::SSH::Config.for(host, [config.path])
 
