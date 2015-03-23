@@ -37,7 +37,7 @@ node default {
 
   if $test_mode == 'true' {
     class { '::phantomjs':
-      package_version => '1.8.0'
+      package_version => '1.9.6'
     }
   }
 
