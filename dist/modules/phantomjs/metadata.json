@@ -1,0 +1,40 @@
+{
+  "name": "3fs-phantomjs",
+  "version": "0.0.8",
+  "author": "3fs",
+  "summary": "Simple puppet module that installs PhantomJS - headless WebKit scriptable with a Javascript API.",
+  "license": "MIT",
+  "source": "https://github.com/3fs/puppet-phantomjs",
+  "project_page": "https://github.com/3fs/puppet-phantomjs",
+  "issues_url": "https://github.com/3fs/puppet-phantomjs/issues",
+  "description": "Simple puppet module that installs PhantomJS - headless WebKit scriptable with a Javascript API.",
+  "operatingsystem_support": [
+    {
+      "operatingsystem": "RedHat",
+      "operatingsystemrelease": [
+  
+      ]
+    },
+    {
+      "operatingsystem": "Amazon",
+      "operatingsystemrelease": [
+  
+      ]
+    },
+    {
+      "operatingsystem": "CentOS",
+      "operatingsystemrelease": [
+  
+      ]
+    },
+    {
+      "operatingsystem": "Ubuntu",
+      "operatingsystemrelease": [
+  
+      ]
+    }
+  ],
+  "dependencies": [
+    {"name":"puppetlabs/stdlib","version_requirement":">=4.0.0 <5.0.0"}
+  ]
+}

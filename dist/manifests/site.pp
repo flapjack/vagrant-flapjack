@@ -35,6 +35,12 @@ node default {
     class { 'flapjack-diner': }
   }
 
+  if $test_mode == 'true' {
+    class { '::phantomjs':
+      package_version => '1.8.0'
+    }
+  }
+
   if $with_sensu == 'true' {
     file { '/tmp/include_sensu_tests':
       ensure => present,
