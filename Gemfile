@@ -7,3 +7,4 @@ gem 'selenium-webdriver', require: false
 gem 'poltergeist', require: false
 gem 'pry-rescue'
 gem 'rake'
+gem 'flapjack-diner'
