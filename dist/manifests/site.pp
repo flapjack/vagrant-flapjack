@@ -37,8 +37,9 @@ node default {
 
   if $with_kafka == 'true' {
 
+    class { 'zookeeper': } ->
     class { 'kafka::broker':
-     config => { 'broker.id' => '0' }
+     config => { 'broker.id' => '0', 'zookeeper.connect' => 'localhost:2181' }
     }
   }
 
