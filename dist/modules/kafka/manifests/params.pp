@@ -22,7 +22,7 @@ class kafka::params {
   $broker_config_defaults = {
     'broker.id'                                     => '0',
     'log.dirs'                                      => '/tmp/kafka-logs',
-    'port'                                          => '6667',
+    'port'                                          => '9092',
     'zookeeper.connect'                             => '',
     'message.max.bytes'                             => '1000000',
     'num.network.threads'                           => '3',
