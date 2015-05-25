@@ -10,6 +10,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   flapjack_major_version = ENV['flapjack_major_version'] || 'v1'
   tutorial_mode          = ENV['tutorial_mode']          || 'false'
   with_sensu             = ENV['with_sensu']             || 'false'
+  with_kafka             = ENV['with_kafka']             || 'false'
 
   case distro_release
   when 'precise'
@@ -58,13 +59,19 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       "flapjack_component"     => flapjack_component,
       "flapjack_major_version" => flapjack_major_version,
       "tutorial_mode"          => tutorial_mode,
-      "with_sensu"             => with_sensu
+      "with_sensu"             => with_sensu,
+      "with_kafka"             => with_kafka
     }
   end
 
   config.vm.provider "virtualbox" do |v|
     v.customize ["modifyvm", :id, "--memory", 2048]
     v.customize ["setextradata", :id, "VBoxInternal/Devices/mc146818/0/Config/UseUTC", 1]
+  end
+
+  #
+  config.vm.provider "vmware" do |v|
+    v.vmx["memsize"] = "2048"
   end
 
   # to speed up subsequent rebuilds install vagrant-cachier

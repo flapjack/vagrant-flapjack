@@ -35,11 +35,17 @@ node default {
     class { 'flapjack-diner': }
   }
 
+  if $with_kafka == 'true' {
+
+    class { 'kafka::broker':
+     config => { 'broker.id' => '0' }
+    }
+  }
+
   if $with_sensu == 'true' {
     file { '/tmp/include_sensu_tests':
       ensure => present,
     }
-
 
     class { 'rabbitmq':
     } ->
