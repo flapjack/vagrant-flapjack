@@ -1,16 +1,22 @@
 class mailcatcher {
   case $operatingsystem {
     'RedHat', 'CentOS': {
-      package { 'centos-release-SCL':
-        ensure => present
-      } ->
-
-      exec { "yum groupinstall -y 'Development Tools'":
-      } ->
-
-      package { [ 'ruby193', 'ruby193-ruby-devel' ]:
-        ensure => present
+      case $operatingsystemmajrelease {
+        '6': {
+          package { 'centos-release-SCL':
+            ensure => present
+          } ->
+          package { [ 'ruby193', 'ruby193-ruby-devel' ]:
+            ensure => present
+          }
+        }
+        default: {
+          package { [ 'ruby', 'ruby-devel' ]:
+            ensure => present
+          }
+        }
       }
+      exec { "yum groupinstall -y 'Development Tools'": }
     }
     'Ubuntu', 'Debian': {
       package { [ 'ruby1.9.1-full', 'build-essential', 'libsqlite3-dev' ]:
