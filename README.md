@@ -73,7 +73,7 @@ This installs the [Flapjack Diner](https://rubygems.org/gems/flapjack-diner) Rub
 export with_sensu="true"
 ```
 
-This will also install and configure Sensu along with its depdencies (RabbitMQ, OS's Redis).
+This will also install and configure Sensu along with its dependencies (RabbitMQ, OS's Redis).
 
 If you already created your vm you can add Sensu by doing a provision, eg:
 
@@ -88,7 +88,7 @@ Production:
 
 - Flapjack: [http://localhost:3080/](http://localhost:3080/)
 - Flapjack API: [http://localhost:3081/](http://localhost:3081/)
-- Resque: [http://localhost:3082/](http://localhost:3082/)
+- Resque: [http://localhost:3082/](http://localhost:3082/) (if Flapjack v1)
 - Nagios: [http://localhost:3083/](http://localhost:3083/nagios3/) user: nagiosadmin pass: nagios
 - Icinga: [http://localhost:3083/](http://localhost:3083/icinga/) user: icingaadmin pass: icinga
 

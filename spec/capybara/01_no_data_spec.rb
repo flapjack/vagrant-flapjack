@@ -1,6 +1,12 @@
 require 'capybara_spec_helper'
 
-describe "Test Flapjack before data is added", :type => :feature do
+def flapjack_major_version
+  return @flapjack_major_version unless @flapjack_major_version.nil?
+  @flapjack_major_version = ENV['flapjack_major_version'] || '-1'
+  @flapjack_major_version
+end
+
+describe "Test Flapjack before data is added", :type => :feature, :if => ['0', '1'].include?(flapjack_major_version) do
   before :all do
     # Bring up apache if it isn't already to stop failing nagios checks for localhost
     system("vagrant ssh -c 'if ! curl localhost:80; then sudo service httpd start; sudo touch /var/www/html/index.html; sleep 40; fi' > /dev/null")
