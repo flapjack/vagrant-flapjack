@@ -17,6 +17,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     config.vm.box_url  = 'https://vagrantcloud.com/hashicorp/precise64'
   when 'trusty'
     config.vm.box      = 'puppetlabs/ubuntu-14.04-64-puppet'
+    config.vm.box_version = '1.0.1'
     config.vm.box_url  = 'https://vagrantcloud.com/puppetlabs/ubuntu-14.04-64-puppet'
   when 'wheezy'
     config.vm.box      = 'cargomedia/debian-7-amd64-default'
